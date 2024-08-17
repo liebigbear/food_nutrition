@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
 
 function FoodGraph(props){
+    // FoodGraph_Header 가져오기
+    const FoodGraph_Header = props.FoodGraph_Header;
     // useNavigate 사용
     const navigate = useNavigate();
     // Outlet컴포넌트에 props 가져오기
@@ -32,21 +34,7 @@ function FoodGraph(props){
             {trig == true ? <Loading></Loading> : null}
             <table id="food_graph">
                 <tbody>
-                    <tr id="graph_line">
-                        <td></td>
-                        <td>상호명</td>
-                        <td>기준</td>
-                        <td>메뉴명</td>
-                        <td>열량(kcal)</td>
-                        <td>탄수화물(g)</td>
-                        <td>단백질(g)</td>
-                        <td>지방(g)</td>
-                        <td>당류(g)</td>
-                        <td>나트륨(g)</td>
-                        <td>콜레스테롤(g)</td>
-                        <td>포화지방산(g)</td>
-                        <td>트렌스지방(g)</td>
-                    </tr>
+                    <FoodGraph_Header></FoodGraph_Header>
                     {list == undefined 
                         ?
                         <tr id="nothing">

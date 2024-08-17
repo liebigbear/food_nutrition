@@ -32,6 +32,26 @@ function useAppKit(){
         </div>
         )
     }
+    // FoodGraph 표 헤더 컴포넌트
+    function FoodGraph_Header(){
+        return(
+            <tr id="graph_line">
+                <td></td>
+                <td>상호명</td>
+                <td>기준(g)</td>
+                <td>메뉴명</td>
+                <td>열량(kcal)</td>
+                <td>탄수화물(g)</td>
+                <td>단백질(g)</td>
+                <td>지방(g)</td>
+                <td>당류(g)</td>
+                <td>나트륨(g)</td>
+                <td>콜레스테롤(g)</td>
+                <td>포화지방산(g)</td>
+                <td>트렌스지방(g)</td>
+            </tr>
+        )
+    }
 
     // 식약처 API 불러오기
     async function getData(get, searchType, setTrig, setList){
@@ -61,7 +81,8 @@ function useAppKit(){
         trig,
         setTrig,
         Loading,
-        getData
+        getData,
+        FoodGraph_Header
     }
 }
 

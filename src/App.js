@@ -19,7 +19,8 @@ function App() {
     trig,
     setTrig,
     Loading,
-    getData
+    getData,
+    FoodGraph_Header
   } = useAppKit();
 
   return (
@@ -48,12 +49,22 @@ function App() {
               setList={setList}
               trig={trig}
               setTrig={setTrig}
+              FoodGraph_Header={FoodGraph_Header}
             ></FoodGraph>
           }></Route>
         </Route>
-        <Route path='SinglePage/:id' element={<FoodSinglePage list={list} navigate={navigate}></FoodSinglePage>}></Route>
+        <Route path='SinglePage/:id' element={
+          <FoodSinglePage 
+              list={list} 
+              navigate={navigate}
+          ></FoodSinglePage>
+        }></Route>
         <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
-        <Route path='ResultPage' element={<ResultPage></ResultPage>}></Route>
+        <Route path='ResultPage' element={
+          <ResultPage 
+              FoodGraph_Header={FoodGraph_Header}
+          ></ResultPage>
+        }></Route>
         <Route path='*' element={<div>잘못된 페이지404</div>}></Route>
       </Routes>
 
