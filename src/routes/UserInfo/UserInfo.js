@@ -29,13 +29,14 @@ function UserInfo(props){
     useEffect(()=>{
         if(done){
             alert('정보가 저장되었습니다.'); 
-            navigate('/');
+            navigate('/FoodInfo');
             setDone(false)
         }
     }, [done])
     
     return(
         <div className="wrap">
+            <h1>내 정보 설정</h1>
             {
                 info != ''
                 ?

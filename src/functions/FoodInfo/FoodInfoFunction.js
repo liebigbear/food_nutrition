@@ -15,7 +15,7 @@ function useInfoKit(){
     function foodSearch(){
         let text = document.getElementById('food_text').value;
         setText_prop(text)
-        navigate('/Graph')
+        navigate('/FoodInfo/Graph')
     }
     function search_switch(e){
         let text = document.getElementById('food_text');

@@ -32,6 +32,7 @@ function FoodGraph(props){
     return(
         <div>
             {trig == true ? <Loading></Loading> : null}
+            <p>음식명을 클릭하면 상세 페이지로 이동합니다.</p>
             <table id="food_graph">
                 <tbody>
                     <FoodGraph_Header FoodGraph_Header_contents={

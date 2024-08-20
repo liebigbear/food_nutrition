@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 //
 import useAppKit from './functions/App/AppFunction';
 import FoodMixture from './routes/FoodMixture/FoodMixture';
+import MainPage from './routes/MainPage/MainPage';
 
 function App() {
   // UserInfo 정보 담을 state
@@ -66,7 +67,8 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path='/' element={<FoodInfo></FoodInfo>}>
+        <Route path='/' element={<MainPage></MainPage>}></Route>
+        <Route path='/FoodInfo' element={<FoodInfo></FoodInfo>}>
           <Route path='Graph' element={
             <FoodGraph 
               navigate={navigate}

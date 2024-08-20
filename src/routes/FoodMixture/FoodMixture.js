@@ -14,7 +14,14 @@ function FoodMixture(){
                         return(
                             <div key={i} className="foodMixture_box">
                                 <p className="mixtureNumber">{i+1}</p>
-                                <p className="food_nm">{o[0].FOOD_NM_KR}, {o[1].FOOD_NM_KR} 외 {o.length - 2}개</p>
+                                {
+                                    o.length == 1 ?
+                                    <p className="food_nm">{o[0].FOOD_NM_KR}</p>
+                                    : o.length == 2 ?
+                                    <p className="food_nm">{o[0].FOOD_NM_KR}, {o[1].FOOD_NM_KR}</p>
+                                    : 
+                                    <p className="food_nm">{o[0].FOOD_NM_KR}, {o[1].FOOD_NM_KR} 외 {o.length - 2}개</p>
+                                }
                                 <button onClick={()=>delete_box(foodMixture, setFoodMixture, i)}>삭제</button>
                             </div>
                         )
