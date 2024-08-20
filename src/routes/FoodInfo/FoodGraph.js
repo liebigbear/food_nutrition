@@ -2,10 +2,10 @@ import { useEffect, useState, useRef } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
 
 function FoodGraph(props){
-    // FoodGraph_Header 가져오기
-    const FoodGraph_Header = props.FoodGraph_Header;
     // useNavigate 사용
     const navigate = useNavigate();
+    // FoodGraph_Header 가져오기
+    const FoodGraph_Header = props.FoodGraph_Header;
     // Outlet컴포넌트에 props 가져오기
     const OutletContext = useOutletContext();
     const text_prop = OutletContext.text_prop;
@@ -34,7 +34,23 @@ function FoodGraph(props){
             {trig == true ? <Loading></Loading> : null}
             <table id="food_graph">
                 <tbody>
-                    <FoodGraph_Header></FoodGraph_Header>
+                    <FoodGraph_Header FoodGraph_Header_contents={
+                        [
+                            '',
+                            '상호명', 
+                            '기준(g)', 
+                            '메뉴명', 
+                            '열량(kcal)', 
+                            '탄수화물(g)',
+                            '단백질(g)',
+                            '지방(g)',
+                            '당류(g)',
+                            '나트륨(g)' ,
+                            '콜레스테롤(g)',
+                            '포화지방산(g)',
+                            '트렌스지방(g)'
+                        ]
+                    }></FoodGraph_Header>
                     {list == undefined 
                         ?
                         <tr id="nothing">

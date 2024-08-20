@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function useAppKit(){
     // getData로 변동되는 state
@@ -33,22 +34,17 @@ function useAppKit(){
         )
     }
     // FoodGraph 표 헤더 컴포넌트
-    function FoodGraph_Header(){
+    function FoodGraph_Header(props){
+        const FoodGraph_Header_contents = props.FoodGraph_Header_contents;
         return(
             <tr id="graph_line">
-                <td></td>
-                <td>상호명</td>
-                <td>기준(g)</td>
-                <td>메뉴명</td>
-                <td>열량(kcal)</td>
-                <td>탄수화물(g)</td>
-                <td>단백질(g)</td>
-                <td>지방(g)</td>
-                <td>당류(g)</td>
-                <td>나트륨(g)</td>
-                <td>콜레스테롤(g)</td>
-                <td>포화지방산(g)</td>
-                <td>트렌스지방(g)</td>
+                {
+                FoodGraph_Header_contents.map((o, i)=>{
+                    return(
+                        <td key={i}>{o}</td>
+                    )
+                })
+                }
             </tr>
         )
     }
@@ -74,6 +70,31 @@ function useAppKit(){
 
     setList(result.body.items)
     }
+    // 햄버거 메뉴 클릭시 링크 컴포넌트
+    function Hamburger_menu(){
+        let navigate = useNavigate();
+        return(
+            <div className="hamburger_menu">
+                <p onClick={()=>{navigate('/')}}>홈</p>
+                <p onClick={()=>{navigate('/UserInfo')}}>내 정보</p>
+                <p onClick={()=>{navigate('/ResultPage')}}>결과창</p>
+                <p onClick={()=>{navigate('/FoodMixture')}}>조합리스트</p>
+            </div>
+        )
+    }
+    // 햄버거메뉴 클릭시 숨은메뉴 나타나기
+    const [hideTrig, setHideTrig] = useState(false)
+    function hamburger_btn_click(){
+        let btn = document.querySelector('.hamburger');
+        if(btn.classList.contains('click')){
+            btn.classList.remove('click')
+            setHideTrig(false)
+        } 
+        else {
+            btn.classList.add('click')
+            setHideTrig(true)
+        }
+    }
 
     return{
         list,
@@ -82,7 +103,10 @@ function useAppKit(){
         setTrig,
         Loading,
         getData,
-        FoodGraph_Header
+        FoodGraph_Header,
+        Hamburger_menu,
+        hideTrig,
+        hamburger_btn_click
     }
 }
 

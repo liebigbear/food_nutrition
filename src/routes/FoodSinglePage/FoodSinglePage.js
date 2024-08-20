@@ -3,11 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import useSingleKit from "../../functions/FoodSinglePage/FoodSinglePage";
 
 function FoodSinglePage(props){
-    useEffect(()=>{
-        if(sessionStorage.getItem('resultlist') == null){
-            sessionStorage.setItem('resultlist', '[]')
-        }
-    },[])
     // navigate 가져오기
     const navigate = props.navigate;
     // url파라미터
