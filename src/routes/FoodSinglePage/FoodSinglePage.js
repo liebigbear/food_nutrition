@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useSingleKit from "../../functions/FoodSinglePage/FoodSinglePage";
+import useSingleKit from "../../functions/FoodSinglePage/FoodSinglePageFunction";
 
 function FoodSinglePage(props){
     // navigate 가져오기
@@ -13,7 +13,8 @@ function FoodSinglePage(props){
     const {
         nutrition_calculate,
         sessionStorage_add_resultList,
-        localStorage_add_singlePage
+        localStorage_add_singlePage,
+        Click_alert
     } = useSingleKit();
     // url파라미터 해당하는 list항목 localStorage에 저장
     localStorage_add_singlePage(idx, list)
@@ -21,8 +22,8 @@ function FoodSinglePage(props){
     const localList = JSON.parse(localStorage.getItem('singlepage'))
     const base_nutrition_info_list = {...localList}
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
-   
     
+
     return(
         <div className="wrap">  
             <div id="single">
@@ -68,6 +69,7 @@ function FoodSinglePage(props){
                 }}
                 onClick={()=>{
                     sessionStorage_add_resultList(nutrition_info_list);
+                    Click_alert();
                 }}
             >오늘은 너다!</button>
             <button
@@ -75,6 +77,7 @@ function FoodSinglePage(props){
                     navigate('ResultPage');
                 }}
             >종합창으로 이동</button>
+            <div className="single_hide_alert hide">메뉴를 종합창에 담았습니다.</div>
         </div>
     )
 }

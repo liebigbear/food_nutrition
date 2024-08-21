@@ -47,10 +47,18 @@ function useSingleKit(){
             localStorage.setItem('singlepage', jsonMenuArr);
         }
     }
+    function Click_alert(){
+        let alert_class = document.querySelector('.single_hide_alert');
+        alert_class.classList.replace('hide', 'show');
+        setTimeout(()=>{
+            alert_class.classList.replace('show', 'hide');
+        }, 1000)
+    }
     return{
         nutrition_calculate,
         sessionStorage_add_resultList,
-        localStorage_add_singlePage
+        localStorage_add_singlePage,
+        Click_alert
     }
 }
 export default useSingleKit;

@@ -28,6 +28,12 @@ function FoodGraph(props){
             }
         }
     }, [text_prop])
+    useEffect(()=>{
+        if(sessionStorage.getItem('nutritionData') != undefined){
+            let nutritionData = JSON.parse(sessionStorage.getItem('nutritionData'))
+            setList(nutritionData)
+        }
+    },[])
 
     return(
         <div>

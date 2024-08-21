@@ -12,17 +12,10 @@ import { useEffect, useState } from 'react';
 import useAppKit from './functions/App/AppFunction';
 import FoodMixture from './routes/FoodMixture/FoodMixture';
 import MainPage from './routes/MainPage/MainPage';
+import MixtureList from './routes/FoodMixture/MixtureList';
 
 function App() {
-  // UserInfo 정보 담을 state
-  const [info, setInfo] = useState({
-    sex : '',
-    age : '',
-    stature : '',
-    meal : '',
-    kcal : '',
-    standard : false
-  });
+
 
   useEffect(()=>{
     if(localStorage.getItem('foodMixture') == undefined){
@@ -48,6 +41,7 @@ function App() {
     Hamburger_menu,
     hideTrig,
     hamburger_btn_click,
+    storage_delete_box
   } = useAppKit();
 
   return (
@@ -88,13 +82,16 @@ function App() {
               navigate={navigate}
           ></FoodSinglePage>
         }></Route>
-        <Route path='UserInfo' element={<UserInfo info={info} setInfo={setInfo}></UserInfo>}></Route>
+        <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
         <Route path='ResultPage' element={
           <ResultPage 
               FoodGraph_Header={FoodGraph_Header}
+              storage_delete_box={storage_delete_box}
           ></ResultPage>
         }></Route>
-        <Route path='FoodMixture' element={<FoodMixture></FoodMixture>}></Route>
+        <Route path='FoodMixture' element={<FoodMixture storage_delete_box={storage_delete_box}></FoodMixture>}>
+          <Route path='MixtureList' element={<MixtureList></MixtureList>}></Route>
+        </Route>
         <Route path='*' element={<div>잘못된 페이지404</div>}></Route>
       </Routes>
     </div>

@@ -68,17 +68,29 @@ function useAppKit(){
     let result = await response.json();
     setTrig(false)
 
-    setList(result.body.items)
+    let make_json = JSON.stringify(result.body.items);
+    sessionStorage.setItem('nutritionData', make_json);
+    let nutritionData = JSON.parse(sessionStorage.getItem('nutritionData'));
+
+    setList(nutritionData)
     }
+
     // 햄버거 메뉴 클릭시 링크 컴포넌트
     function Hamburger_menu(){
         let navigate = useNavigate();
         return(
             <div className="hamburger_menu">
-                <p onClick={()=>{navigate('/FoodInfo')}}>음식 정보</p>
+                <p onClick={()=>{
+                    if(sessionStorage.getItem('nutritionData') != undefined){
+                        navigate('/FoodInfo/Graph')
+                    }
+                    else{
+                        navigate('/FoodInfo')
+                    }
+                }}>음식 정보</p>
                 <p onClick={()=>{navigate('/UserInfo')}}>내 정보</p>
                 <p onClick={()=>{navigate('/ResultPage')}}>결과창</p>
-                <p onClick={()=>{navigate('/FoodMixture')}}>조합리스트</p>
+                <p onClick={()=>{navigate('/FoodMixture/MixtureList')}}>조합리스트</p>
             </div>
         )
     }
@@ -96,6 +108,13 @@ function useAppKit(){
         }
     }
 
+    // local, session storage 안에 담긴 데이터로 만든 html표 항목 삭제 기능
+    function storage_delete_box(state, setState, idx, storageItem, storage_type){
+        let modify_arr = [...state];
+        modify_arr.splice(idx, 1);
+        storage_type.setItem(storageItem, JSON.stringify(modify_arr));
+        setState(modify_arr)
+    };
     return{
         list,
         setList,
@@ -106,7 +125,8 @@ function useAppKit(){
         FoodGraph_Header,
         Hamburger_menu,
         hideTrig,
-        hamburger_btn_click
+        hamburger_btn_click,
+        storage_delete_box
     }
 }
 

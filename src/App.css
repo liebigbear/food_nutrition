@@ -139,6 +139,26 @@ li{
 #single #single_info{
   width: 100%;
 }
+.single_hide_alert{
+  transition: all .5s ease;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.single_hide_alert.hide{
+  opacity: 0;
+}
+.single_hide_alert.show{
+  display: 1;
+}
+/* ResultPage */
+.menu_delete{
+  display: flex; justify-content: center; align-items: center;
+}
+.menu_delete > button{
+  background: red; border: solid 1px #000;
+  color: #fff; cursor: pointer;
+} 
 /* FoodMixture */
 .foodMixture_box{
   width: 100%; height: 100px; display: block;

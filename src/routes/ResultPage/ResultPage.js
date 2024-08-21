@@ -4,16 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 function ResultPage(props){
     const navigate = useNavigate();
+    // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
+    const storage_delete_box = props.storage_delete_box;
+
+    const [resultList, setResultList] = useState(JSON.parse(sessionStorage.getItem('resultlist')));
     const {
-        resultList,
         result,
-        localStorage_add_foodMixture
+        localStorage_add_foodMixture,
     } = useResultkit();
     const FoodGraph_Header = props.FoodGraph_Header;
     if(JSON.parse(sessionStorage.getItem('resultlist')).length != 0){
         return(
             <div className="wrap">
-                <div>결과창</div>
+                <h1>결과창</h1>
                 <table id="food_graph">
                     <tbody>
                         <FoodGraph_Header FoodGraph_Header_contents={
@@ -30,7 +33,8 @@ function ResultPage(props){
                                 '나트륨(g)' ,
                                 '콜레스테롤(g)',
                                 '포화지방산(g)',
-                                '트렌스지방(g)'
+                                '트렌스지방(g)',
+                                '제거'
                             ]}>
                         </FoodGraph_Header>
                         {
@@ -50,6 +54,9 @@ function ResultPage(props){
                                 <td className="aa7">{o.AMT_NUM7}</td>
                                 <td className="aa8">{o.AMT_NUM8}</td>
                                 <td className="aa9">{o.AMT_NUM9}</td>
+                                <td className="menu_delete">
+                                    <button onClick={()=>storage_delete_box(resultList, setResultList, i, 'resultlist', sessionStorage)}>X</button>
+                                </td>
                             </tr>
                             )
                         })
@@ -67,8 +74,8 @@ function ResultPage(props){
                     <p>포화지방은? {result("AMT_NUM8", resultList)}</p>
                     <p>트렌스지방은? {result("AMT_NUM9", resultList)}</p>
                 </div>
-                <button onClick={()=>localStorage_add_foodMixture()}>결정!</button>
-                <button onClick={()=>navigate('/FoodMixture')}>내 조합 보기</button>
+                <button onClick={()=>localStorage_add_foodMixture(resultList)}>결정!</button>
+                <button onClick={()=>navigate('/FoodMixture/MixtureList')}>내 조합 보기</button>
             </div>
         )
     }
