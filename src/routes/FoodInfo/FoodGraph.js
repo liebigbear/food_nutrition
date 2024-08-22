@@ -1,24 +1,30 @@
 import { useEffect, useState, useRef } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
+import useGraphkit from "../../functions/FoodInfo/FoodGraphFunction";
+import usePublickit from "../../functions/public/PublicFunction";
 
 function FoodGraph(props){
     // useNavigate 사용
     const navigate = useNavigate();
-    // FoodGraph_Header 가져오기
-    const FoodGraph_Header = props.FoodGraph_Header;
     // Outlet컴포넌트에 props 가져오기
     const OutletContext = useOutletContext();
     const text_prop = OutletContext.text_prop;
     const searchType = OutletContext.searchType;
     // getData로 변동되는 state(App.js에서 가져옴)
     const [list, setList] = [props.list, props.setList]
-    // getData 가져오기(App.js에서 가져옴)
-    const getData = props.getData
-    // 로딩창 props 해오기 & 로딩창 트리거(App.js에서 가져옴)
-    const Loading = props.Loading
+    // 로딩창 트리거(App.js에서 가져옴)
     const [trig, setTrig] = [props.trig, props.setTrig]
     // useEffect 첫 재렌더링 막는 트리거(useRef사용) / useRef는 페이지가 재렌더링 되어도 값을 저장 + useRef가 바뀌어도 state처럼 재렌더링이 되지 않는 특성을 지님
     const ref = useRef(true);
+    // 로딩창, FoodGraph_Header 가져오기(PublicFunction에서 가져옴)
+    const {
+        Loading,
+        FoodGraph_Header
+    } = usePublickit();
+    // getData 가져오기(FoodGraphFunction에서 가져옴)
+    const {
+        getData
+    }=useGraphkit();
     // text_prop(input값)상태변경될 시 getData 작동
     useEffect(()=>{
         if(text_prop != ''){
@@ -29,12 +35,11 @@ function FoodGraph(props){
         }
     }, [text_prop])
     useEffect(()=>{
-        if(sessionStorage.getItem('nutritionData') != undefined){
+        if(sessionStorage.getItem('nutritionData') != 'undefined'){
             let nutritionData = JSON.parse(sessionStorage.getItem('nutritionData'))
             setList(nutritionData)
         }
     },[])
-
     return(
         <div>
             {trig == true ? <Loading></Loading> : null}
@@ -58,7 +63,7 @@ function FoodGraph(props){
                             '트렌스지방(g)'
                         ]
                     }></FoodGraph_Header>
-                    {list == undefined 
+                    {list == []
                         ?
                         <tr id="nothing">
                             <td colSpan={document.getElementById('graph_line').childElementCount}>

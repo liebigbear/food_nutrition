@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import useResultkit from "../../functions/ResultPage/ResultPageFunction";
 import { useNavigate } from "react-router-dom";
+import usePublickit from "../../functions/public/PublicFunction";
+import { click } from "@testing-library/user-event/dist/click";
 
 function ResultPage(props){
     const navigate = useNavigate();
-    // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
-    const storage_delete_box = props.storage_delete_box;
-
     const [resultList, setResultList] = useState(JSON.parse(sessionStorage.getItem('resultlist')));
+    const [alertSwitch, setAlertSwitch] = [props.alertSwitch, props.setAlertSwitch];
+    console.log(alertSwitch)
+    // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
+    const {
+        FoodGraph_Header,
+        storage_delete_box,
+        Alert,
+        click_alert
+    }= usePublickit();
     const {
         result,
         localStorage_add_foodMixture,
     } = useResultkit();
-    const FoodGraph_Header = props.FoodGraph_Header;
     if(JSON.parse(sessionStorage.getItem('resultlist')).length != 0){
         return(
             <div className="wrap">
@@ -74,8 +81,9 @@ function ResultPage(props){
                     <p>포화지방은? {result("AMT_NUM8", resultList)}</p>
                     <p>트렌스지방은? {result("AMT_NUM9", resultList)}</p>
                 </div>
-                <button onClick={()=>localStorage_add_foodMixture(resultList)}>결정!</button>
+                <button onClick={()=>{localStorage_add_foodMixture(resultList); click_alert(setAlertSwitch)}}>결정!</button>
                 <button onClick={()=>navigate('/FoodMixture/MixtureList')}>내 조합 보기</button>
+                <Alert text={'정보가 조합리스트에 저장되었습니다.'}></Alert>
             </div>
         )
     }

@@ -15,7 +15,10 @@ import MainPage from './routes/MainPage/MainPage';
 import MixtureList from './routes/FoodMixture/MixtureList';
 
 function App() {
-
+  // getData로 변동되는 state(전역state)
+  const [list, setList] = useState([]);
+  const [trig, setTrig] = useState(false);
+  const [alertSwitch, setAlertSwitch] = useState(false);
 
   useEffect(()=>{
     if(localStorage.getItem('foodMixture') == undefined){
@@ -31,13 +34,6 @@ function App() {
 
   const navigate = useNavigate()
   const {
-    list,
-    setList,
-    trig,
-    setTrig,
-    Loading,
-    getData,
-    FoodGraph_Header,
     Hamburger_menu,
     hideTrig,
     hamburger_btn_click,
@@ -65,14 +61,10 @@ function App() {
         <Route path='/FoodInfo' element={<FoodInfo></FoodInfo>}>
           <Route path='Graph' element={
             <FoodGraph 
-              navigate={navigate}
-              Loading={Loading} 
-              getData={getData} 
               list={list}
               setList={setList}
               trig={trig}
               setTrig={setTrig}
-              FoodGraph_Header={FoodGraph_Header}
             ></FoodGraph>
           }></Route>
         </Route>
@@ -80,16 +72,21 @@ function App() {
           <FoodSinglePage 
               list={list} 
               navigate={navigate}
+              alertSwitch={alertSwitch} 
+              setAlertSwitch={setAlertSwitch}
           ></FoodSinglePage>
         }></Route>
         <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
         <Route path='ResultPage' element={
           <ResultPage 
-              FoodGraph_Header={FoodGraph_Header}
-              storage_delete_box={storage_delete_box}
-          ></ResultPage>
+            alertSwitch={alertSwitch} 
+            setAlertSwitch={setAlertSwitch}>
+          </ResultPage>
         }></Route>
-        <Route path='FoodMixture' element={<FoodMixture storage_delete_box={storage_delete_box}></FoodMixture>}>
+        <Route path='FoodMixture' element={
+          <FoodMixture 
+            storage_delete_box={storage_delete_box}>
+          </FoodMixture>}>
           <Route path='MixtureList' element={<MixtureList></MixtureList>}></Route>
         </Route>
         <Route path='*' element={<div>잘못된 페이지404</div>}></Route>
