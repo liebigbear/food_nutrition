@@ -7,14 +7,13 @@ import { click } from "@testing-library/user-event/dist/click";
 function ResultPage(props){
     const navigate = useNavigate();
     const [resultList, setResultList] = useState(JSON.parse(sessionStorage.getItem('resultlist')));
-    const [alertSwitch, setAlertSwitch] = [props.alertSwitch, props.setAlertSwitch];
     const nutrition_name = props.nutrition_name;
     // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
     const {
         FoodGraph_Header,
         storage_delete_box,
         Alert,
-        click_alert
+        click_alert,
     }= usePublickit();
     const {
         result_nutrition,
@@ -98,7 +97,7 @@ function ResultPage(props){
                     })
                     }
                 </div>
-                <button onClick={()=>{localStorage_add_foodMixture(resultList); click_alert(setAlertSwitch)}}>결정!</button>
+                <button onClick={()=>{localStorage_add_foodMixture(resultList, result_nutrition_list); click_alert()}}>결정!</button>
                 <button onClick={()=>{navigate('/FoodInfo/Graph')}}>더 담으러 가기</button>
                 <button onClick={()=>navigate('/FoodMixture/MixtureList')}>내 조합 보기</button>
                 <Alert text={'정보가 조합리스트에 저장되었습니다.'}></Alert>

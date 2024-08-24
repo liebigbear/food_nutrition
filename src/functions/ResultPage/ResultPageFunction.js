@@ -9,9 +9,13 @@ function useResultkit(){
         return result.toFixed(0);
     }
 
-    function localStorage_add_foodMixture(resultList){
+    function localStorage_add_foodMixture(resultList, result_nutrition_list){
+        let make_Mixture_file = {
+            result : resultList,
+            result_nutrition : result_nutrition_list
+        }
         let getItem = JSON.parse(localStorage.getItem('foodMixture'));
-        getItem.push(resultList);
+        getItem.push(make_Mixture_file);
         localStorage.setItem('foodMixture', JSON.stringify(getItem))
     }
 

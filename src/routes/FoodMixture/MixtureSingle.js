@@ -4,9 +4,9 @@ function MixtureSingle(){
     const param = useParams();
     const OutletContext = useOutletContext();
     const navigate = useNavigate();
-    const foodMixture = OutletContext.foodMixture;
+    const mixtureList = OutletContext.mixtureList;
     const idx = Number(param.id);
-    const singleMixture = foodMixture[idx];
+    const singleMixture = mixtureList[idx];
     return(
         <div>
         {

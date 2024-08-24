@@ -4,8 +4,11 @@ function MixtureList(){
     const navigate = useNavigate();
     const OutletContext = useOutletContext();
     const foodMixture = OutletContext.foodMixture;
-    const storage_delete_box = OutletContext.storage_delete_box;
     const setFoodMixture = OutletContext.setFoodMixture;
+    const storage_delete_box = OutletContext.storage_delete_box;
+    const mixtureList = OutletContext.mixtureList;
+    const nutritionList = OutletContext.nutritionList;
+    console.log(nutritionList)
     return(
         <>
         {
@@ -13,7 +16,7 @@ function MixtureList(){
             ?
             <>
             {
-            foodMixture.map((o, i)=>{
+            mixtureList.map((o, i)=>{
                 return(
                     <div key={i} className="foodMixture_box">
                         <p className="mixtureNumber">{i+1}</p>

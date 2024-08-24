@@ -9,13 +9,21 @@ function FoodMixture(props){
         storage_delete_box
     }=usePublickit();
     const [foodMixture, setFoodMixture] = useState(JSON.parse(localStorage.getItem('foodMixture')));
+    const mixtureList = foodMixture.map((o)=>{
+        return o.result
+    });
+    const nutritionList = foodMixture.map((o)=>{
+        return o.result_nutrition
+    });
     return(
     <div className="wrap">
         <h1>조합리스트</h1>
         <Outlet context={{
             storage_delete_box,
             foodMixture,
-            setFoodMixture
+            setFoodMixture,
+            mixtureList,
+            nutritionList
         }}></Outlet>
     </div>
 

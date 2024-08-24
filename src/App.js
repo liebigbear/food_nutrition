@@ -19,7 +19,6 @@ function App() {
   // getData로 변동되는 state(전역state)
   const [list, setList] = useState([]);
   const [trig, setTrig] = useState(false);
-  const [alertSwitch, setAlertSwitch] = useState(false);
   const nutrition_name = [
     '칼로리',
     '탄수화물',
@@ -84,15 +83,11 @@ function App() {
           <FoodSinglePage 
               list={list} 
               navigate={navigate}
-              alertSwitch={alertSwitch} 
-              setAlertSwitch={setAlertSwitch}
           ></FoodSinglePage>
         }></Route>
         <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
         <Route path='ResultPage' element={
           <ResultPage 
-            alertSwitch={alertSwitch} 
-            setAlertSwitch={setAlertSwitch}
             nutrition_name={nutrition_name}
           >
           </ResultPage>
@@ -104,7 +99,7 @@ function App() {
           <Route path='MixtureList' element={<MixtureList></MixtureList>}></Route>
           <Route path='MixtureSingle/:id' element={<MixtureSingle></MixtureSingle>}></Route>
         </Route>
-        <Route path='*' element={<div>잘못된 페이지404</div>}></Route>
+        <Route path='/*' element={<div className='wrap'>잘못된 페이지404</div>}></Route>
       </Routes>
     </div>
   );
