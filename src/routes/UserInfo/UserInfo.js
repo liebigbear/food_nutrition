@@ -10,8 +10,7 @@ function UserInfo(props){
         infoList,
         hide_kcalInput,
         setDone,
-        done,
-        kcal_calculator
+        done
     } = useUserKit();
 
     useEffect(()=>{
@@ -19,6 +18,7 @@ function UserInfo(props){
             document.querySelector('.sex').value = info.sex;
             document.querySelector('.age').value = info.age;
             document.querySelector('.stature').value = info.stature;
+            document.querySelector('.weight').value = info.weight;
             document.querySelector('.meal').value = info.meal;
             document.querySelector('.kcal').value = info.kcal;
             document.querySelector('.standard').checked = info.standard;
@@ -45,8 +45,9 @@ function UserInfo(props){
                     <span>성별 : {info.sex}</span>
                     <span>연령대 : {info.age}</span>
                     <span>키 : {info.stature}cm</span>
-                    <span>끼니 수 : {info.meal}</span>
-                    <span>하루 섭취 칼로리 : {info.standard ? kcal_calculator(info.sex, info.stature) : info.kcal}kcal</span>
+                    <span>몸무게 : {info.weight}kg</span>
+                    <span>끼니 수 : {info.meal}끼</span>
+                    <span>하루 섭취 칼로리 : {info.kcal}kcal</span>
                 </div>
                 :
                 null
@@ -80,15 +81,19 @@ function UserInfo(props){
                 <p><input className="stature"/>cm</p>
             </div>
             <div>
-                <p>하루에 드시는 끼니 수를 입력해주세요.</p>
+                <p>몸무게를 입력해주세요</p>
+                <p><input className="weight"/>kg</p>
+            </div>
+            <div>
+                <p>하루에 드시는 끼니 수를 입력해주세요(최대 6끼).</p>
                 <select className="meal">
                     <option style={{display : 'none'}}></option>
-                    <option>1끼</option>
-                    <option>2끼</option>
-                    <option>3끼</option>
-                    <option>4끼</option>
-                    <option>5끼</option>
-                    <option>6끼</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
                 </select>
             </div>
             <div>
@@ -103,7 +108,7 @@ function UserInfo(props){
                 </div>
             </div>
             <button onClick={()=>{
-                infoList('sex', 'age', 'stature', 'meal', 'kcal', 'standard');
+                infoList('sex', 'age', 'stature', 'weight', 'meal', 'kcal', 'standard');
             }}>가보자구</button>
         </div>
     )

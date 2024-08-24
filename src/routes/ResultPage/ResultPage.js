@@ -8,7 +8,7 @@ function ResultPage(props){
     const navigate = useNavigate();
     const [resultList, setResultList] = useState(JSON.parse(sessionStorage.getItem('resultlist')));
     const [alertSwitch, setAlertSwitch] = [props.alertSwitch, props.setAlertSwitch];
-    console.log(alertSwitch)
+    const nutrition_name = props.nutrition_name;
     // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
     const {
         FoodGraph_Header,
@@ -17,9 +17,23 @@ function ResultPage(props){
         click_alert
     }= usePublickit();
     const {
-        result,
+        result_nutrition,
         localStorage_add_foodMixture,
+        meal_evaluation
     } = useResultkit();
+    const result_nutrition_list = {
+        AMT_NUM1 : result_nutrition("AMT_NUM1", resultList),
+        AMT_NUM2 : result_nutrition("AMT_NUM2", resultList),
+        AMT_NUM3 : result_nutrition("AMT_NUM3", resultList),
+        AMT_NUM4 : result_nutrition("AMT_NUM4", resultList),
+        AMT_NUM5 : result_nutrition("AMT_NUM5", resultList),
+        AMT_NUM6 : result_nutrition("AMT_NUM6", resultList),
+        AMT_NUM7 : result_nutrition("AMT_NUM7", resultList),
+        AMT_NUM8 : result_nutrition("AMT_NUM8", resultList),
+        AMT_NUM9 : result_nutrition("AMT_NUM9", resultList)
+    }
+    const result_nutrition_list_keys = Object.keys(result_nutrition_list);
+
     if(JSON.parse(sessionStorage.getItem('resultlist')).length != 0){
         return(
             <div className="wrap">
@@ -71,17 +85,21 @@ function ResultPage(props){
                     </tbody>
                 </table>
                 <div>
-                    <p>칼로리는? {result("AMT_NUM1", resultList)}</p>
-                    <p>탄수화물은? {result("AMT_NUM2", resultList)}</p>
-                    <p>단백질은? {result("AMT_NUM3", resultList)}</p>
-                    <p>지방은? {result("AMT_NUM4", resultList)}</p>
-                    <p>당류는? {result("AMT_NUM5", resultList)}</p>
-                    <p>나트륨은? {result("AMT_NUM6", resultList)}</p>
-                    <p>콜레스테롤은? {result("AMT_NUM7", resultList)}</p>
-                    <p>포화지방은? {result("AMT_NUM8", resultList)}</p>
-                    <p>트렌스지방은? {result("AMT_NUM9", resultList)}</p>
+                    <h3>한끼로 어때요?</h3>
+                    <p>필수 5대 영양소는 기준 영양소의 20% +-로 기준을 제공해줍니다.</p>
+                    {
+                    result_nutrition_list_keys.map((o, i)=>{
+                        return(
+                            <div key={i}>
+                                <span>{nutrition_name[i]} {result_nutrition_list[o]}</span>
+                                {meal_evaluation(o, result_nutrition_list[o], true)}
+                            </div>
+                        )
+                    })
+                    }
                 </div>
                 <button onClick={()=>{localStorage_add_foodMixture(resultList); click_alert(setAlertSwitch)}}>결정!</button>
+                <button onClick={()=>{navigate('/FoodInfo/Graph')}}>더 담으러 가기</button>
                 <button onClick={()=>navigate('/FoodMixture/MixtureList')}>내 조합 보기</button>
                 <Alert text={'정보가 조합리스트에 저장되었습니다.'}></Alert>
             </div>
@@ -92,6 +110,7 @@ function ResultPage(props){
             <div className="wrap">
                 <h1>담은 메뉴가 없습니다.</h1>
                 <p>원하는 메뉴를 담아보세요!</p>
+                <button onClick={()=>navigate('/FoodInfo/Graph')}>담으러 가기!</button>
             </div>
         )
     }

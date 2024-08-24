@@ -76,11 +76,8 @@ function FoodSinglePage(props){
                     click_alert();
                 }}
             >오늘은 너다!</button>
-            <button
-                onClick={()=>{
-                    navigate('ResultPage');
-                }}
-            >종합창으로 이동</button>
+            <button onClick={()=>{navigate('/FoodInfo/Graph');}}>음식정보로 이동</button>
+            <button onClick={()=>{navigate('ResultPage');}}>종합창으로 이동</button>
             {<Alert text={'정보가 종합창에 저장되었습니다.'}></Alert>}
         </div>
     )

@@ -1,6 +1,7 @@
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function MixtureList(){
+    const navigate = useNavigate();
     const OutletContext = useOutletContext();
     const foodMixture = OutletContext.foodMixture;
     const storage_delete_box = OutletContext.storage_delete_box;
@@ -25,6 +26,7 @@ function MixtureList(){
                         <p className="food_nm">{o[0].FOOD_NM_KR}, {o[1].FOOD_NM_KR} 외 {o.length - 2}개</p>
                         }
                         <button onClick={()=>storage_delete_box(foodMixture, setFoodMixture, i, 'foodMixture', localStorage)}>삭제</button>
+                        <button onClick={()=>{navigate(`/FoodMixture/MixtureSingle/${i}`)}}>자세히보기</button>
                     </div>
                 )
             })

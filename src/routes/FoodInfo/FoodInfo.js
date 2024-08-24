@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import useInfoKit from "../../functions/FoodInfo/FoodInfoFunction";
 function FoodInfo(){
@@ -10,6 +10,10 @@ function FoodInfo(){
         foodSearch, 
         search_switch
     } = useInfoKit();
+    useEffect(()=>{
+        if(sessionStorage.getItem('nutritionData') == null)
+        sessionStorage.setItem('nutritionData', '[]');
+    }, []);
     return(
         <div id="FoodSearching" className="wrap">
             <h1>음식 판독기</h1>

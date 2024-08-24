@@ -13,12 +13,24 @@ import useAppKit from './functions/App/AppFunction';
 import FoodMixture from './routes/FoodMixture/FoodMixture';
 import MainPage from './routes/MainPage/MainPage';
 import MixtureList from './routes/FoodMixture/MixtureList';
+import MixtureSingle from './routes/FoodMixture/MixtureSingle';
 
 function App() {
   // getData로 변동되는 state(전역state)
   const [list, setList] = useState([]);
   const [trig, setTrig] = useState(false);
   const [alertSwitch, setAlertSwitch] = useState(false);
+  const nutrition_name = [
+    '칼로리',
+    '탄수화물',
+    '단백질',
+    '지방',
+    '당류',
+    '나트륨',
+    '콜레스테롤',
+    '포화지방',
+    '트렌스지방',
+  ]
 
   useEffect(()=>{
     if(localStorage.getItem('foodMixture') == undefined){
@@ -80,7 +92,9 @@ function App() {
         <Route path='ResultPage' element={
           <ResultPage 
             alertSwitch={alertSwitch} 
-            setAlertSwitch={setAlertSwitch}>
+            setAlertSwitch={setAlertSwitch}
+            nutrition_name={nutrition_name}
+          >
           </ResultPage>
         }></Route>
         <Route path='FoodMixture' element={
@@ -88,6 +102,7 @@ function App() {
             storage_delete_box={storage_delete_box}>
           </FoodMixture>}>
           <Route path='MixtureList' element={<MixtureList></MixtureList>}></Route>
+          <Route path='MixtureSingle/:id' element={<MixtureSingle></MixtureSingle>}></Route>
         </Route>
         <Route path='*' element={<div>잘못된 페이지404</div>}></Route>
       </Routes>

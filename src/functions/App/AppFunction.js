@@ -7,6 +7,7 @@ function useAppKit(){
         let navigate = useNavigate();
         return(
             <div className="hamburger_menu">
+                <p onClick={()=>{navigate('/UserInfo')}}>내 정보</p>
                 <p onClick={()=>{
                     if(sessionStorage.getItem('nutritionData') != undefined){
                         navigate('/FoodInfo/Graph')
@@ -15,7 +16,6 @@ function useAppKit(){
                         navigate('/FoodInfo')
                     }
                 }}>음식 정보</p>
-                <p onClick={()=>{navigate('/UserInfo')}}>내 정보</p>
                 <p onClick={()=>{navigate('/ResultPage')}}>결과창</p>
                 <p onClick={()=>{navigate('/FoodMixture/MixtureList')}}>조합리스트</p>
             </div>
