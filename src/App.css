@@ -7,8 +7,17 @@ li{
   padding: 0;
 }
 .App{width: 100%; position: relative;}
+/* 재사용 css */
+.btn{
+  border: none; border-radius: 10px;
+  background:linear-gradient(#81c784, #66bb6a 90%, #4caf50 100%); 
+  color: #fff; font-weight: bold; cursor: pointer;
+}
+.btn:hover{
+  background: #66bb6a;
+}
 /* wrap */
-.wrap{width: 100%; padding: 50px 100px 80px; margin-top: 30px;}
+.wrap{width: 100%; padding: 50px 100px 0;}
 /* top_nav */
 #top_nav{
   width: 100%; height: 50px; background: #4CAF50; 
@@ -88,17 +97,84 @@ li{
 }
 /* MainPage */
 #main_page{
-  display: flex; flex-flow: column;
+  display: flex; flex-flow: column; height: 100vh;
   justify-content: center; align-items: center;
+  gap: 50px;
 }
 #main_page .main_center_title{
+  margin-top: 50px;
   font-size: 50px;
+  opacity: 0;
+  animation: show_img 1s ease-in-out; animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+#main_page .main_sub_title{
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0;
+  animation: show_img 1s ease-in-out; animation-delay: .5s;
+  animation-fill-mode: forwards;
 }
 #main_page .start_btn{
-  width: 150px; height: 50px;
-  border: none; border-radius: 30px;
-  background:rgba(100, 158, 13, 0.735); 
-  color: #fff; cursor: pointer;
+  width: 200px; height: 70px;
+  margin-top: 100px;
+  font-size: 18px;
+  opacity: 0;
+  animation: show_img 1s ease-in-out; animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+/* food_bg */
+#main_page .food_bg{
+  width: 100%; height: 100%; position: absolute;
+  top: 0; left: 0; z-index: -1; overflow: hidden;
+}
+#main_page .food_bg .food_img{
+  width: 300px; height: 300px; background: aqua;
+  position: absolute; opacity: 0;
+  background: url('/assets/pngwing.com.png');
+}
+#main_page .food_bg .food_img.st{
+  animation: show_img 1s ease-in-out; animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+#main_page .food_bg .food_img.nd{
+  animation: show_img 1s ease-in-out; animation-delay: 1.3s;
+  animation-fill-mode: forwards; background: #4CAF50;
+}
+#main_page .food_bg .food_img.rd{
+  animation: show_img 1s ease-in-out; animation-delay: 1.6s;
+  animation-fill-mode: forwards; background: #D4A017;
+}
+/* st */
+#main_page .food_bg .food_img.no0{
+  bottom: 0; left: 0;
+}
+#main_page .food_bg .food_img.no1{
+  bottom: 0; right: 0;
+}
+/* nd */
+#main_page .food_bg .food_img.no2{
+  bottom: 30%; left: 0;
+}
+#main_page .food_bg .food_img.no3{
+  bottom: 30%; right: 0;
+}
+/* rd */
+#main_page .food_bg .food_img.no4{
+  bottom: 0; left: 20%;
+}
+#main_page .food_bg .food_img.no5{
+  bottom: 0; right: 20%;
+}
+@keyframes show_img{
+  0%{
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 /* UserInfo */
 .now_info > span{
