@@ -14,11 +14,11 @@ function ResultPage(props){
         storage_delete_box,
         Alert,
         click_alert,
+        meal_evaluation
     }= usePublickit();
     const {
         result_nutrition,
         localStorage_add_foodMixture,
-        meal_evaluation
     } = useResultkit();
     const result_nutrition_list = {
         AMT_NUM1 : result_nutrition("AMT_NUM1", resultList),

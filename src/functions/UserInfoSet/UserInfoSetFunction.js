@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 function useUserKit(){
-    const [done, setDone] = useState(false)
     function infoList(sexC, ageC, statureC, weightC, mealC, kcalC, standardC){
         const info_list = {
             sex : document.querySelector('.' + sexC).value,
@@ -14,17 +13,31 @@ function useUserKit(){
         }
     
         if(info_list.sex != '' && info_list.age != '' && info_list.stature != '' && info_list.weight != '' && info_list.meal != '' && info_list.kcal != ''){
-            let result = {
-                sex : info_list.sex,
-                age : info_list.age,
-                stature : info_list.stature,
-                weight : info_list.weight,
-                meal :info_list.meal,
-                kcal : info_list.kcal,
-                standard : info_list.standard
+            let result = '';
+            if(info_list.standard == true){
+                result = {
+                    sex : info_list.sex,
+                    age : info_list.age,
+                    stature : info_list.stature,
+                    weight : info_list.weight,
+                    meal :info_list.meal,
+                    kcal : kcal_calculator(info_list.sex, info_list.stature),
+                    standard : info_list.standard
+                }
+            } else {
+                result = {
+                    sex : info_list.sex,
+                    age : info_list.age,
+                    stature : info_list.stature,
+                    weight : info_list.weight,
+                    meal :info_list.meal,
+                    kcal : info_list.kcal,
+                    standard : info_list.standard
+                }
             }
+            
             sessionStorage.setItem('userInfo', JSON.stringify(result))
-            setDone(true);
+            alert('정보가 저장되었습니다.') 
         }
         else if(info_list.sex != '' && info_list.age != '' && info_list.stature != '' && info_list.weight != '' && info_list.meal != '' && info_list.kcal == '' && info_list.standard == true){
                 let result = {
@@ -37,10 +50,10 @@ function useUserKit(){
                     standard : info_list.standard
                 }
                 sessionStorage.setItem('userInfo', JSON.stringify(result))
-                setDone(true);   
-        } else {
+                alert('정보가 저장되었습니다.') 
+        } 
+        else {
             alert('정보입력을 완성해주세요.');
-            setDone(false);
         }
 
         function kcal_calculator(sex, stature){
@@ -72,8 +85,6 @@ function useUserKit(){
     return{
         infoList,
         hide_kcalInput,
-        done,
-        setDone
     }
 }
 export default useUserKit;

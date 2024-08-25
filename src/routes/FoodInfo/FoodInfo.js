@@ -17,6 +17,7 @@ function FoodInfo(){
     return(
         <div id="FoodSearching" className="wrap">
             <h1>음식 판독기</h1>
+            <p style={{fontSize : '12px'}}>식약처의 음식영양성분DB를 활용해 영양성분을 보여줍니다.</p>
             <div id="search_switch">
                 <button onClick={(e)=> search_switch(e.target)}>브랜드명으로 검색</button>
             </div>

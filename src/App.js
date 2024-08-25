@@ -14,6 +14,7 @@ import FoodMixture from './routes/FoodMixture/FoodMixture';
 import MainPage from './routes/MainPage/MainPage';
 import MixtureList from './routes/FoodMixture/MixtureList';
 import MixtureSingle from './routes/FoodMixture/MixtureSingle';
+import UserInfoSet from './routes/UserInfoSet/UserInfoSet';
 
 function App() {
   // getData로 변동되는 state(전역state)
@@ -57,7 +58,7 @@ function App() {
         <span className='logo' 
               style={{cursor : 'pointer'}} 
               onClick={()=>{navigate('/')}}
-              >먹어도 돼요?
+              >꿀조합
         </span>
         <div className='hamburger' onClick={()=>{hamburger_btn_click()}}>
           <span></span>
@@ -86,6 +87,7 @@ function App() {
           ></FoodSinglePage>
         }></Route>
         <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
+        <Route path='UserInfoSet' element={<UserInfoSet></UserInfoSet>}></Route>
         <Route path='ResultPage' element={
           <ResultPage 
             nutrition_name={nutrition_name}
@@ -97,7 +99,9 @@ function App() {
             storage_delete_box={storage_delete_box}>
           </FoodMixture>}>
           <Route path='MixtureList' element={<MixtureList></MixtureList>}></Route>
-          <Route path='MixtureSingle/:id' element={<MixtureSingle></MixtureSingle>}></Route>
+          <Route path='MixtureSingle/:id' element={
+            <MixtureSingle nutrition_name={nutrition_name}></MixtureSingle>
+          }></Route>
         </Route>
         <Route path='/*' element={<div className='wrap'>잘못된 페이지404</div>}></Route>
       </Routes>
