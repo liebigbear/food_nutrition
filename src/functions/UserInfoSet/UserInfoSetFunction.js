@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function useUserKit(){
-    function infoList(sexC, ageC, statureC, weightC, mealC, kcalC, standardC){
+    const navigate = useNavigate();
+    function infoList(sexC, ageC, statureC, weightC, mealC, kcalC, standardC, move = false){
         const info_list = {
             sex : document.querySelector('.' + sexC).value,
             age : document.querySelector('.' + ageC).value,
@@ -38,6 +40,9 @@ function useUserKit(){
             
             sessionStorage.setItem('userInfo', JSON.stringify(result))
             alert('정보가 저장되었습니다.') 
+            if(move){
+                navigate('/FoodInfo/Graph')
+            }
         }
         else if(info_list.sex != '' && info_list.age != '' && info_list.stature != '' && info_list.weight != '' && info_list.meal != '' && info_list.kcal == '' && info_list.standard == true){
                 let result = {
@@ -51,6 +56,9 @@ function useUserKit(){
                 }
                 sessionStorage.setItem('userInfo', JSON.stringify(result))
                 alert('정보가 저장되었습니다.') 
+                if(move){
+                    navigate('/FoodInfo/Graph')
+                }
         } 
         else {
             alert('정보입력을 완성해주세요.');

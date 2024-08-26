@@ -15,6 +15,7 @@ import MainPage from './routes/MainPage/MainPage';
 import MixtureList from './routes/FoodMixture/MixtureList';
 import MixtureSingle from './routes/FoodMixture/MixtureSingle';
 import UserInfoSet from './routes/UserInfoSet/UserInfoSet';
+import FirstUserInfoSet from './routes/UserInfoSet/FirstUserInfoSet';
 
 function App() {
   // getData로 변동되는 state(전역state)
@@ -41,6 +42,9 @@ function App() {
     }
     if(sessionStorage.getItem('userInfo') == undefined){
       sessionStorage.setItem('userInfo', '[]');
+    }
+    if(sessionStorage.getItem('nutritionData') == undefined){
+      sessionStorage.setItem('nutritionData', '[]');
     }
   },[])
 
@@ -88,6 +92,7 @@ function App() {
         }></Route>
         <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
         <Route path='UserInfoSet' element={<UserInfoSet></UserInfoSet>}></Route>
+        <Route path='FirstUserInfoSet' element={<FirstUserInfoSet></FirstUserInfoSet>}></Route>
         <Route path='ResultPage' element={
           <ResultPage 
             nutrition_name={nutrition_name}

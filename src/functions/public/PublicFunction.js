@@ -27,14 +27,12 @@ function usePublickit(){
         </div>
         )
     }
-    // FoodGraph 표 헤더 컴포넌트
-    function FoodGraph_Header(props){
-        // 컴포넌트 사용시 파라미터 안에 항목들을 array형식으로 받아 반복문으로 td 형성 
-        const FoodGraph_Header_contents = props.FoodGraph_Header_contents;
+    // FoodGraph 표 헤더(spread 연산자로 헤더에 표시할 내용들 추가)
+    function foodGraph_Header(...arr){
         return(
             <tr id="graph_line">
                 {
-                FoodGraph_Header_contents.map((o, i)=>{
+                arr.map((o, i)=>{
                     return(
                         <td key={i}>{o}</td>
                     )
@@ -137,7 +135,7 @@ function usePublickit(){
         }
         // 영양성분 판독기
         function nutrition_reader(plus, nutrition, minus){
-            if(minus < nutrition && nutrition < plus){
+            if(minus <= nutrition && nutrition <= plus){
                 return(
                     <div>
                         <span className="nutrition_check good">적절</span>
@@ -163,7 +161,7 @@ function usePublickit(){
     }
     return{
         Loading,
-        FoodGraph_Header,
+        foodGraph_Header,
         storage_delete_box,
         Alert,
         click_alert,

@@ -3,6 +3,7 @@ import useResultkit from "../../functions/ResultPage/ResultPageFunction";
 import { useNavigate } from "react-router-dom";
 import usePublickit from "../../functions/public/PublicFunction";
 import { click } from "@testing-library/user-event/dist/click";
+import useSingleKit from "../../functions/FoodSinglePage/FoodSinglePageFunction";
 
 function ResultPage(props){
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ function ResultPage(props){
     const nutrition_name = props.nutrition_name;
     // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
     const {
-        FoodGraph_Header,
+        foodGraph_Header,
         storage_delete_box,
         Alert,
         click_alert,
@@ -19,6 +20,7 @@ function ResultPage(props){
     const {
         result_nutrition,
         localStorage_add_foodMixture,
+        nutrition_calculate
     } = useResultkit();
     const result_nutrition_list = {
         AMT_NUM1 : result_nutrition("AMT_NUM1", resultList),
@@ -39,9 +41,7 @@ function ResultPage(props){
                 <h1>결과창</h1>
                 <table id="food_graph">
                     <tbody>
-                        <FoodGraph_Header FoodGraph_Header_contents={
-                            [
-                                '',
+                        {foodGraph_Header('',
                                 '상호명', 
                                 '기준(g)', 
                                 '메뉴명', 
@@ -54,16 +54,17 @@ function ResultPage(props){
                                 '콜레스테롤(g)',
                                 '포화지방산(g)',
                                 '트렌스지방(g)',
-                                '제거'
-                            ]}>
-                        </FoodGraph_Header>
+                                '수정',
+                                '제거',
+                            )
+                        }
                         {
                         resultList.map((o, i)=>{
                             return(
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{o.MAKER_NM}</td>
-                                <td>{o.gram}</td>
+                                <td className="result_gram">{o.gram}</td>
                                 <td>{o.FOOD_NM_KR}</td>
                                 <td className="aa1">{o.AMT_NUM1}</td>
                                 <td className="aa2">{o.AMT_NUM2}</td>
@@ -74,6 +75,12 @@ function ResultPage(props){
                                 <td className="aa7">{o.AMT_NUM7}</td>
                                 <td className="aa8">{o.AMT_NUM8}</td>
                                 <td className="aa9">{o.AMT_NUM9}</td>
+                                <td className="menu_correction">
+                                    <button onClick={()=>{
+                                        let gram = document.querySelector('.result_gram')
+                                        
+                                    }}>수정</button>
+                                </td>
                                 <td className="menu_delete">
                                     <button onClick={()=>storage_delete_box(resultList, setResultList, i, 'resultlist', sessionStorage)}>X</button>
                                 </td>

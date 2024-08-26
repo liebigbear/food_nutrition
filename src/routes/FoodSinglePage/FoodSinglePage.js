@@ -23,8 +23,7 @@ function FoodSinglePage(props){
     // url파라미터 해당하는 list항목 localStorage에 저장
     localStorage_add_singlePage(idx, list)
     
-    const localList = JSON.parse(localStorage.getItem('singlepage'))
-    const base_nutrition_info_list = {...localList}
+    const base_nutrition_info_list = {...JSON.parse(localStorage.getItem('singlepage'))}
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
     
 

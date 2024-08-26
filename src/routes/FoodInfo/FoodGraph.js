@@ -19,7 +19,7 @@ function FoodGraph(props){
     // 로딩창, FoodGraph_Header 가져오기(PublicFunction에서 가져옴)
     const {
         Loading,
-        FoodGraph_Header
+        foodGraph_Header
     } = usePublickit();
     // getData 가져오기(FoodGraphFunction에서 가져옴)
     const {
@@ -46,9 +46,7 @@ function FoodGraph(props){
             <p>음식명을 클릭하면 상세 페이지로 이동합니다.</p>
             <table id="food_graph">
                 <tbody>
-                    <FoodGraph_Header FoodGraph_Header_contents={
-                        [
-                            '',
+                    {foodGraph_Header('',
                             '상호명', 
                             '기준(g)', 
                             '메뉴명', 
@@ -61,8 +59,8 @@ function FoodGraph(props){
                             '콜레스테롤(g)',
                             '포화지방산(g)',
                             '트렌스지방(g)'
-                        ]
-                    }></FoodGraph_Header>
+                        )
+                    }
                     {list == []
                         ?
                         <tr id="nothing">
