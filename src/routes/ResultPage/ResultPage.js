@@ -20,7 +20,7 @@ function ResultPage(props){
     const {
         result_nutrition,
         localStorage_add_foodMixture,
-        nutrition_calculate
+        result_correction
     } = useResultkit();
     const result_nutrition_list = {
         AMT_NUM1 : result_nutrition("AMT_NUM1", resultList),
@@ -64,7 +64,7 @@ function ResultPage(props){
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{o.MAKER_NM}</td>
-                                <td className="result_gram">{o.gram}</td>
+                                <td><span className="result_gram">{o.gram}</span></td>
                                 <td>{o.FOOD_NM_KR}</td>
                                 <td className="aa1">{o.AMT_NUM1}</td>
                                 <td className="aa2">{o.AMT_NUM2}</td>
@@ -77,9 +77,10 @@ function ResultPage(props){
                                 <td className="aa9">{o.AMT_NUM9}</td>
                                 <td className="menu_correction">
                                     <button onClick={()=>{
-                                        let gram = document.querySelector('.result_gram')
-                                        
-                                    }}>수정</button>
+                                        let gram = document.querySelectorAll('.result_gram')[i]
+                                        result_correction(gram, o, resultList)
+                                    }}
+                                    >수정</button>
                                 </td>
                                 <td className="menu_delete">
                                     <button onClick={()=>storage_delete_box(resultList, setResultList, i, 'resultlist', sessionStorage)}>X</button>

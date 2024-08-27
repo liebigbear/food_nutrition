@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function useResultkit(){
     function result_nutrition(value, resultList){
         let result = 0;
@@ -19,23 +21,57 @@ function useResultkit(){
         localStorage.setItem('foodMixture', JSON.stringify(getItem))
     }
 
-    function nutrition_calculate(base_nutrition_info_list, setNutrition_info_list){
-        let gram = Number(document.querySelector('.result_gram').value);
-        let copy_base_nutrition_info_list = {...base_nutrition_info_list};
-        let objectKey = Object.keys(copy_base_nutrition_info_list);
-        let key = '';
-        for(let i = 2; i < objectKey.length; i++){
-            key = objectKey[i]
-            if(copy_base_nutrition_info_list[key] != undefined){
-                copy_base_nutrition_info_list[key] = (copy_base_nutrition_info_list[key] * (gram * 0.01)).toFixed(0);
+    // 재렌더링용 숫자 state(input 이벤트 발생마자 +1 기능)
+    let [on, setOn] = useState(0);
+    function result_correction(gram, o, resultList){
+        if(gram.nodeName == 'SPAN'){
+            let gram_value = gram.textContent;
+            let gram_input = document.createElement('input')
+            gram_input.value = gram_value
+            gram_input.classList.add('result_gram')
+            // 기준값용 object deepCopy
+            let copy_obj = {...o};
+            // key값 추출
+            let obj_keys = Object.keys(o);
+            gram_input.addEventListener('input', function(e){
+                let input_value = e.target.value;
+                obj_keys.map((key)=>{
+                    if(!isNaN(o[key])){
+                        o[key] = nutrition_calculate(copy_obj[key], gram_value, input_value);
+                    }
+                })
+                setOn(on++);
+            })
+
+            gram.parentNode.replaceChild(gram_input, gram)
+        } else if(gram.nodeName == 'INPUT'){
+            sessionStorage.setItem('resultlist', JSON.stringify(resultList))
+            let gram_value = gram.value;
+            let gram_span = document.createElement('span')
+            gram_span.textContent = gram_value
+            gram_span.classList.add('result_gram')
+
+            gram.parentNode.replaceChild(gram_span, gram)
+        }
+
+        function nutrition_calculate(target, standard_value, input_value){
+            if(Number(input_value) != NaN){
+                //변경값
+                target = Number(target)
+                //기준gram
+                standard_value = Number(standard_value);
+                //변경gram
+                input_value = Number(input_value);
+
+                let result = (target * (input_value / standard_value)).toFixed(0)
+                return result
             }
         }
-        setNutrition_info_list(copy_base_nutrition_info_list);
     }
     return{
         result_nutrition,
         localStorage_add_foodMixture,
-        nutrition_calculate
+        result_correction
     }
 }
 export default useResultkit;

@@ -11,19 +11,18 @@ function MixtureSingle(props){
     const singleMixture = OutletContext.mixtureList[idx];
     const singleNutrition = OutletContext.nutritionList[idx];
     const result_nutrition_list_keys = Object.keys(singleNutrition);
+    // App.js에서 가져옴
     const nutrition_name = props.nutrition_name
     console.log(singleNutrition, result_nutrition_list_keys)
     const {
-        FoodGraph_Header,
+        foodGraph_Header,
         meal_evaluation
     }=usePublickit();
     return(
         <div>
         <table id="food_graph">
             <tbody>
-                <FoodGraph_Header FoodGraph_Header_contents={
-                    [
-                        '',
+                {foodGraph_Header('',
                         '상호명', 
                         '기준(g)', 
                         '메뉴명', 
@@ -36,8 +35,8 @@ function MixtureSingle(props){
                         '콜레스테롤(g)',
                         '포화지방산(g)',
                         '트렌스지방(g)',
-                    ]}>
-                </FoodGraph_Header>
+                )}
+
                 {
                 singleMixture.map((o, i)=>{
                     return(
