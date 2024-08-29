@@ -18,8 +18,8 @@ function MixtureList(){
             {
             mixtureList.map((o, i)=>{
                 return(
-                    <div key={i} className="foodMixture_box">
-                        <p className="mixtureNumber">{i+1}</p>
+                    <div key={i} className="foodMixture_box" onClick={()=>{navigate(`/FoodMixture/MixtureSingle/${i}`)}}>
+                        <p className="mixtureNumber">{i+1}.</p>
                         {
                         o.length == 1 ?
                         <p className="food_nm">{o[0].FOOD_NM_KR}</p>
@@ -28,8 +28,11 @@ function MixtureList(){
                         : 
                         <p className="food_nm">{o[0].FOOD_NM_KR}, {o[1].FOOD_NM_KR} 외 {o.length - 2}개</p>
                         }
-                        <button onClick={()=>storage_delete_box(foodMixture, setFoodMixture, i, 'foodMixture', localStorage)}>삭제</button>
-                        <button onClick={()=>{navigate(`/FoodMixture/MixtureSingle/${i}`)}}>자세히보기</button>
+                        <button className="mixture_delete" onClick={function(e){
+                            // 클릭이벤트가 부모요소까지 퍼지는걸 제어
+                            e.stopPropagation();
+                            storage_delete_box(foodMixture, setFoodMixture, i, 'foodMixture', localStorage)}
+                        }>X</button>
                     </div>
                 )
             })

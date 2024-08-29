@@ -1,15 +1,18 @@
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
-import useUserKit from "../../functions/UserInfoSet/UserInfoSetFunction";
+import useUserSetKit from "../../functions/UserInfoSet/UserInfoSetFunction";
 import { useEffect } from "react";
 
-function FirstUserInfoSet(){
+function FirstUserInfoSet(props){
     const navigate = useNavigate();
     const info = JSON.parse(sessionStorage.getItem('userInfo'));
+    const img_url = props.img_url;
+    const [on, setOn] = [props.on, props.setOn];
     const {
         infoList,
         hide_kcalInput,
-    } = useUserKit();
+        getImage
+    } = useUserSetKit();
 
     useEffect(()=>{
         if(info != ''){
@@ -27,6 +30,12 @@ function FirstUserInfoSet(){
     return(
         <div className="wrap">
             <h1>내 정보 설정</h1>
+            <div className="image_box" onClick={()=>document.querySelector('.image_select').click()}>
+                    <img className="user_img" src={img_url} alt=""/>
+                    <input className="image_select" type="file" accept="image/*" onChange={function(event){
+                        getImage(event);
+                    }} style={{display : 'none'}}></input>
+                </div>
             <div>
                 <p>성별을 선택해주세요.</p>
                 <select className="sex">
@@ -82,7 +91,7 @@ function FirstUserInfoSet(){
                 </div>
             </div>
             <button onClick={()=>{
-                infoList('sex', 'age', 'stature', 'weight', 'meal', 'kcal', 'standard', true)
+                infoList('sex', 'age', 'stature', 'weight', 'meal', 'kcal', 'standard',on, setOn, true);
             }}>저장!</button>
         </div>
     )

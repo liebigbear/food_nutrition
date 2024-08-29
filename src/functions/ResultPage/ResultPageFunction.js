@@ -21,9 +21,7 @@ function useResultkit(){
         localStorage.setItem('foodMixture', JSON.stringify(getItem))
     }
 
-    // 재렌더링용 숫자 state(input 이벤트 발생마자 +1 기능)
-    let [on, setOn] = useState(0);
-    function result_correction(gram, o, resultList){
+    function result_correction(gram, o, resultList, on, setOn){
         if(gram.nodeName == 'SPAN'){
             let gram_value = gram.textContent;
             let gram_input = document.createElement('input')
@@ -40,22 +38,31 @@ function useResultkit(){
                         o[key] = nutrition_calculate(copy_obj[key], gram_value, input_value);
                     }
                 })
-                setOn(on++);
+                setOn(on => on + 1);
             })
 
             gram.parentNode.replaceChild(gram_input, gram)
         } else if(gram.nodeName == 'INPUT'){
-            sessionStorage.setItem('resultlist', JSON.stringify(resultList))
             let gram_value = gram.value;
-            let gram_span = document.createElement('span')
-            gram_span.textContent = gram_value
-            gram_span.classList.add('result_gram')
-
-            gram.parentNode.replaceChild(gram_span, gram)
+            if(gram_value == 0){
+                alert('값이 1 이상이어야 합니다.')
+            }
+            else if(isNaN(gram_value)){
+                alert('값에 문자가 없어야 합니다.')
+            }
+            else {
+                let gram_span = document.createElement('span');
+                gram_span.textContent = gram_value;
+                gram_span.classList.add('result_gram');
+                sessionStorage.setItem('resultlist', JSON.stringify(resultList))
+    
+                gram.parentNode.replaceChild(gram_span, gram);
+            }
+            
         }
 
         function nutrition_calculate(target, standard_value, input_value){
-            if(Number(input_value) != NaN){
+            if(!isNaN(Number(input_value))){
                 //변경값
                 target = Number(target)
                 //기준gram
@@ -63,8 +70,10 @@ function useResultkit(){
                 //변경gram
                 input_value = Number(input_value);
 
-                let result = (target * (input_value / standard_value)).toFixed(0)
+                let result = (target * (input_value / standard_value)).toFixed(2)
                 return result
+            } else {
+                return target
             }
         }
     }

@@ -16,10 +16,20 @@ li{
 .btn:hover{
   background: #66bb6a;
 }
+.image_box{
+  width: 100px; height: 100px; 
+  border: solid 1px #000; border-radius: 50%;
+  cursor: pointer; overflow: hidden;
+}
+.user_img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
 /* wrap */
 .wrap{width: 100%; padding: 50px 100px 0;}
 /* top_nav */
 #top_nav{
+  z-index: 99;
   width: 100%; height: 50px; background: #4CAF50; 
   position: fixed; display: flex;
   top: 0; left: 0; padding: 0 100px;
@@ -47,6 +57,17 @@ li{
 }
 #top_nav .hamburger > span:nth-child(3){
   bottom: 6px; left: 50%;
+}
+#top_nav .nav_click_menu{
+  display: flex; gap: 20px;
+  align-items: center;
+}
+#top_nav .nav_user_info{
+  width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: none;
+}
+#top_nav .nav_user_info .nav_user_img{
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 /*  */
 #top_nav .hamburger:hover > span:nth-child(1){
@@ -208,6 +229,7 @@ li{
 .now_info > span{
   margin-right: 10px;
 }
+
 /* FoodSearching css */
 #FoodSearching #search_form{
   display: flex; align-items: center;
@@ -299,6 +321,10 @@ li{
   width: 100%; height: 100px; display: block;
   border: solid 1px #000; border-radius: 30px;
   padding: 10px 20px; margin-bottom: 20px;
+  cursor: pointer; position: relative;
+}
+.foodMixture_box:hover{
+  background: #81c784; color: #fff;
 }
 .foodMixture_box > p{
   margin: 0; padding: 0;
@@ -308,4 +334,14 @@ li{
 }
 .foodMixture_box .food_nm{
   font-size: 12px;
+}
+.mixture_delete{
+  background: rgb(228, 121, 121); color: white;
+  border: none; width: 30px; height: 30px; border-radius: 100%;
+  display: flex; justify-content: center; align-items: center;
+  line-height: 0; cursor: pointer;
+  position: absolute; top: 10px; right: 20px;
+}
+.mixture_delete:hover{
+  background: rgb(250, 132, 132);
 }

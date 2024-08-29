@@ -21,6 +21,11 @@ function App() {
   // getData로 변동되는 state(전역state)
   const [list, setList] = useState([]);
   const [trig, setTrig] = useState(false);
+  // 유저 이미지
+  const img_url = sessionStorage.getItem('user_img_url');
+  // 재렌더링용 숫자 state(input 이벤트 발생마자 +1 기능)
+  let [on, setOn] = useState(0);
+  // 영양성분 9가지
   const nutrition_name = [
     '칼로리',
     '탄수화물',
@@ -32,6 +37,7 @@ function App() {
     '포화지방',
     '트렌스지방',
   ]
+
 
   useEffect(()=>{
     if(localStorage.getItem('foodMixture') == undefined){
@@ -64,13 +70,23 @@ function App() {
               onClick={()=>{navigate('/')}}
               >꿀조합
         </span>
-        <div className='hamburger' onClick={()=>{hamburger_btn_click()}}>
-          <span></span>
-          <span></span>
-          <span></span>
+        <div className='nav_click_menu'>
+          <div className='nav_user_info'>
+            <img className='nav_user_img' src={img_url} style={{background : '#fff'}}></img>
+          </div>
+          <div>
+            <div className='hamburger' onClick={()=>{hamburger_btn_click()}}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            {hideTrig ? <Hamburger_menu></Hamburger_menu> : null}
+          </div>
         </div>
-        {hideTrig ? <Hamburger_menu></Hamburger_menu> : null}
       </nav>
+      <div>
+        
+      </div>
 
       <Routes>
         <Route path='/' element={<MainPage></MainPage>}></Route>
@@ -90,12 +106,25 @@ function App() {
               navigate={navigate}
           ></FoodSinglePage>
         }></Route>
-        <Route path='UserInfo' element={<UserInfo></UserInfo>}></Route>
-        <Route path='UserInfoSet' element={<UserInfoSet></UserInfoSet>}></Route>
-        <Route path='FirstUserInfoSet' element={<FirstUserInfoSet></FirstUserInfoSet>}></Route>
+        <Route path='UserInfo' element={<UserInfo img_url={img_url}></UserInfo>}></Route>
+        <Route path='UserInfoSet' element={
+          <UserInfoSet 
+          img_url={img_url}
+          on={on}
+          setOn={setOn}
+          ></UserInfoSet>}></Route>
+        <Route path='FirstUserInfoSet' element={
+          <FirstUserInfoSet 
+            img_url={img_url}
+            on={on}
+            setOn={setOn}
+          ></FirstUserInfoSet>}>
+        </Route>
         <Route path='ResultPage' element={
           <ResultPage 
             nutrition_name={nutrition_name}
+            on={on}
+            setOn={setOn}
           >
           </ResultPage>
         }></Route>

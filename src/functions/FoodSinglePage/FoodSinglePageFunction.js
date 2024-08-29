@@ -7,7 +7,7 @@ function useSingleKit(){
         for(let i = 2; i < objectKey.length; i++){
             key = objectKey[i]
             if(copy_base_nutrition_info_list[key] != undefined){
-                copy_base_nutrition_info_list[key] = (copy_base_nutrition_info_list[key] * (gram * 0.01)).toFixed(0);
+                copy_base_nutrition_info_list[key] = (copy_base_nutrition_info_list[key] * (gram * 0.01)).toFixed(2);
             }
         }
         setNutrition_info_list(copy_base_nutrition_info_list);

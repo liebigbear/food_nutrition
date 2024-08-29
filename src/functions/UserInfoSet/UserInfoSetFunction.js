@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function useUserKit(){
+function useUserSetKit(){
     const navigate = useNavigate();
-    function infoList(sexC, ageC, statureC, weightC, mealC, kcalC, standardC, move = false){
+    function infoList(sexC, ageC, statureC, weightC, mealC, kcalC, standardC, on, setOn, move = false){
         const info_list = {
             sex : document.querySelector('.' + sexC).value,
             age : document.querySelector('.' + ageC).value,
@@ -39,6 +39,8 @@ function useUserKit(){
             }
             
             sessionStorage.setItem('userInfo', JSON.stringify(result))
+            sessionStorage.setItem('user_img_url', document.querySelector('.user_img').src);
+            setOn(on => on + 1)
             alert('정보가 저장되었습니다.') 
             if(move){
                 navigate('/FoodInfo/Graph')
@@ -55,6 +57,8 @@ function useUserKit(){
                     standard : info_list.standard
                 }
                 sessionStorage.setItem('userInfo', JSON.stringify(result))
+                sessionStorage.setItem('user_img_url', document.querySelector('.user_img').src);
+                setOn(on => on + 1)
                 alert('정보가 저장되었습니다.') 
                 if(move){
                     navigate('/FoodInfo/Graph')
@@ -90,9 +94,24 @@ function useUserKit(){
         }
     }
 
+    function getImage(event){
+        let preview = new FileReader();
+        preview.addEventListener('load', function(e){
+            const img = document.querySelectorAll('.user_img');
+            img.forEach((o)=>{
+                o.src = e.target.result;
+            })
+        });
+        if(event.target.files[0] != undefined){
+            preview.readAsDataURL(event.target.files[0]);
+        }
+    }
+  
+
     return{
         infoList,
         hide_kcalInput,
+        getImage
     }
 }
-export default useUserKit;
+export default useUserSetKit;

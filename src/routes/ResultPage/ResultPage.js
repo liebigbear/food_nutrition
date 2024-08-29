@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useResultkit from "../../functions/ResultPage/ResultPageFunction";
 import { useNavigate } from "react-router-dom";
 import usePublickit from "../../functions/public/PublicFunction";
-import { click } from "@testing-library/user-event/dist/click";
 import useSingleKit from "../../functions/FoodSinglePage/FoodSinglePageFunction";
 
 function ResultPage(props){
@@ -10,6 +9,8 @@ function ResultPage(props){
     const [resultList, setResultList] = useState(JSON.parse(sessionStorage.getItem('resultlist')));
     const nutrition_name = props.nutrition_name;
     // storage 안의 데이터로 만든 html 항목 삭제 기능 가져오기
+    const [on, setOn] = [props.on, props.setOn];
+
     const {
         foodGraph_Header,
         storage_delete_box,
@@ -78,7 +79,7 @@ function ResultPage(props){
                                 <td className="menu_correction">
                                     <button onClick={()=>{
                                         let gram = document.querySelectorAll('.result_gram')[i]
-                                        result_correction(gram, o, resultList)
+                                        result_correction(gram, o, resultList, on, setOn)
                                     }}
                                     >수정</button>
                                 </td>
