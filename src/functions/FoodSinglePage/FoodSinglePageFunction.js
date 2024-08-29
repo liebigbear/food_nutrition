@@ -4,7 +4,7 @@ function useSingleKit(){
         let copy_base_nutrition_info_list = {...base_nutrition_info_list};
         let objectKey = Object.keys(copy_base_nutrition_info_list);
         let key = '';
-        for(let i = 2; i < objectKey.length; i++){
+        for(let i = 3; i < objectKey.length; i++){
             key = objectKey[i]
             if(copy_base_nutrition_info_list[key] != undefined){
                 copy_base_nutrition_info_list[key] = (copy_base_nutrition_info_list[key] * (gram * 0.01)).toFixed(2);
@@ -33,6 +33,7 @@ function useSingleKit(){
             const menuArr = {
                 FOOD_NM_KR : list[idx].FOOD_NM_KR,
                 MAKER_NM : list[idx].MAKER_NM,
+                Z10500 : list[idx].Z10500,
                 AMT_NUM1 : list[idx].AMT_NUM1,
                 AMT_NUM2 : list[idx].AMT_NUM2,
                 AMT_NUM3 : list[idx].AMT_NUM3,
@@ -41,7 +42,7 @@ function useSingleKit(){
                 AMT_NUM6 : list[idx].AMT_NUM6,
                 AMT_NUM7 : list[idx].AMT_NUM7,
                 AMT_NUM8 : list[idx].AMT_NUM8,
-                AMT_NUM9 : list[idx].AMT_NUM9
+                AMT_NUM9 : list[idx].AMT_NUM9,
             }
             const jsonMenuArr = JSON.stringify(menuArr);
             localStorage.setItem('singlepage', jsonMenuArr);

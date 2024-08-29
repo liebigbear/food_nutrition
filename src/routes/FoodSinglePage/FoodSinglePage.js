@@ -20,12 +20,12 @@ function FoodSinglePage(props){
         Alert,
         click_alert
     } = usePublickit();
+    
     // url파라미터 해당하는 list항목 localStorage에 저장
     localStorage_add_singlePage(idx, list)
     
     const base_nutrition_info_list = {...JSON.parse(localStorage.getItem('singlepage'))}
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
-    
 
     return(
         <div className="wrap">  
@@ -46,6 +46,7 @@ function FoodSinglePage(props){
                             }}
                             />g
                         </span>
+                        <span className="basic_gram" style={{fontSize : '10px', color : 'gray'}}>(1회 제공량 : {nutrition_info_list.Z10500})</span>
                     </div>
                     <p>열량 : {nutrition_info_list.AMT_NUM1}kcal</p>
                     <p>탄수화물 : {nutrition_info_list.AMT_NUM2}g</p>

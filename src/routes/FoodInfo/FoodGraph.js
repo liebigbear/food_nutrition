@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
 import useGraphkit from "../../functions/FoodInfo/FoodGraphFunction";
 import usePublickit from "../../functions/public/PublicFunction";
+import useInfoKit from "../../functions/FoodInfo/FoodInfoFunction";
 
 function FoodGraph(props){
     // useNavigate 사용
@@ -10,6 +11,12 @@ function FoodGraph(props){
     const OutletContext = useOutletContext();
     const text_prop = OutletContext.text_prop;
     const searchType = OutletContext.searchType;
+    const foodRange = OutletContext.foodRange;
+    const setFoodRange = OutletContext.setFoodRange;
+    const foodSearchText = sessionStorage.getItem('foodSearchText');
+    const foodSearchType = sessionStorage.getItem('foodSearchType');
+    const foodSearchNumber = Number(sessionStorage.getItem('foodSearchNumber'));
+    // 음식 페이지 범위
     // getData로 변동되는 state(App.js에서 가져옴)
     const [list, setList] = [props.list, props.setList]
     // 로딩창 트리거(App.js에서 가져옴)
@@ -30,7 +37,7 @@ function FoodGraph(props){
         if(text_prop != ''){
             if(ref){
                 ref.current = false;
-                getData(text_prop, searchType, setTrig, setList)
+                getData(foodSearchText, foodSearchType, setTrig, setList, foodSearchNumber)
             }
         }
     }, [text_prop])
@@ -41,14 +48,15 @@ function FoodGraph(props){
         }
     },[])
     return(
-        <div>
+        <div id="graphOutlet">
             {trig == true ? <Loading></Loading> : null}
             <p>음식명을 클릭하면 상세 페이지로 이동합니다.</p>
             <table id="food_graph">
                 <tbody>
                     {foodGraph_Header('',
                             '상호명', 
-                            '기준(g)', 
+                            '기준', 
+                            '1회 제공량',
                             '메뉴명', 
                             '열량(kcal)', 
                             '탄수화물(g)',
@@ -76,6 +84,7 @@ function FoodGraph(props){
                                     <td>{i + 1}</td>
                                     <td>{o.MAKER_NM}</td>
                                     <td>{o.SERVING_SIZE}</td>
+                                    <td>{o.Z10500}</td>
                                     <td id="single_link"
                                         onClick={()=>{
                                             navigate(`/SinglePage/${i}`)
@@ -96,6 +105,31 @@ function FoodGraph(props){
                     }
                 </tbody>
             </table>
+            <div id="pagenation_box">
+                <div className="pagenation">
+                    <button onClick={()=>{
+                            if(foodRange != 1){
+                                const range = foodRange - 1;
+                                sessionStorage.setItem('foodSearchNumber', range)
+                                getData(foodSearchText, foodSearchType, setTrig, setList, range);
+                                setFoodRange(foodRange => foodRange - 1);
+                            } else {
+                                alert('마지막 페이지 입니다.')
+                            }
+                        }}>이전</button>
+                    <span>{foodRange}페이지</span>
+                    <button onClick={function(){
+                            if(list.length < 100){
+                                alert('마지막 페이지 입니다.');
+                            } else {
+                                const range = foodRange + 1;
+                                sessionStorage.setItem('foodSearchNumber', range)
+                                getData(foodSearchText, foodSearchType, setTrig, setList, range);
+                                setFoodRange(foodRange => foodRange + 1);
+                            }
+                        }}>다음</button>
+                </div>
+            </div>
         </div>
     )
 }

@@ -6,12 +6,15 @@ function FoodInfo(){
     const {
         text_prop, 
         searchType, 
+        foodRange,
+        setFoodRange,
         btnEnter, 
         foodSearch, 
         search_switch
     } = useInfoKit();
+    
     useEffect(()=>{
-        if(sessionStorage.getItem('nutritionData') == null)
+        if(sessionStorage.getItem('nutritionData') == null);
         sessionStorage.setItem('nutritionData', '[]');
     }, []);
     return(
@@ -30,9 +33,9 @@ function FoodInfo(){
                 />
                 <button id="search" onClick={()=>foodSearch()}>검색!</button>
             </div>
-            <Outlet context={{text_prop, searchType}}></Outlet>
+            <Outlet context={{text_prop, searchType, foodRange, setFoodRange}}></Outlet>
         </div>
-    )
-}
+    );
+};
 
 export default FoodInfo;
