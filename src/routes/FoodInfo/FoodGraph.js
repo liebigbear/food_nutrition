@@ -10,7 +10,6 @@ function FoodGraph(props){
     // Outlet컴포넌트에 props 가져오기
     const OutletContext = useOutletContext();
     const text_prop = OutletContext.text_prop;
-    const searchType = OutletContext.searchType;
     const foodRange = OutletContext.foodRange;
     const setFoodRange = OutletContext.setFoodRange;
     const foodSearchText = sessionStorage.getItem('foodSearchText');
@@ -51,13 +50,14 @@ function FoodGraph(props){
         <div id="graphOutlet">
             {trig == true ? <Loading></Loading> : null}
             <p>음식명을 클릭하면 상세 페이지로 이동합니다.</p>
-            <table id="food_graph">
+            <table className="food_graph">
                 <tbody>
-                    {foodGraph_Header('',
+                    {foodGraph_Header(
+                            '번호',
                             '상호명', 
+                            '메뉴명', 
                             '기준', 
                             '1회 제공량',
-                            '메뉴명', 
                             '열량(kcal)', 
                             '탄수화물(g)',
                             '단백질(g)',
@@ -72,7 +72,7 @@ function FoodGraph(props){
                     {list == []
                         ?
                         <tr id="nothing">
-                            <td colSpan={document.getElementById('graph_line').childElementCount}>
+                            <td colSpan={document.querySelector('.graph_line').childElementCount}>
                                 <h1>요청하신 정보가 없습니다.</h1>
                                 <p>정보를 주고싶은데 해당 데이터가 업데이트 안됐어요 ㅠㅠ</p>
                             </td>
@@ -80,16 +80,16 @@ function FoodGraph(props){
                         :
                         list.map((o, i)=>{
                             return(
-                                <tr key={i}>
+                                <tr key={i} className="table_row">
                                     <td>{i + 1}</td>
                                     <td>{o.MAKER_NM}</td>
-                                    <td>{o.SERVING_SIZE}</td>
-                                    <td>{o.Z10500}</td>
                                     <td id="single_link"
                                         onClick={()=>{
                                             navigate(`/SinglePage/${i}`)
                                         }}
                                     >{o.FOOD_NM_KR}</td>
+                                    <td>{o.SERVING_SIZE}</td>
+                                    <td>{o.Z10500}</td>
                                     <td>{o.AMT_NUM1}</td>
                                     <td>{o.AMT_NUM2}</td>
                                     <td>{o.AMT_NUM3}</td>

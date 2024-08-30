@@ -20,11 +20,11 @@ function MixtureSingle(props){
     }=usePublickit();
     return(
         <div>
-        <table id="food_graph">
+        <table className="food_graph">
             <tbody>
                 {foodGraph_Header('',
                         '상호명', 
-                        '기준(g)', 
+                        '중량(g)', 
                         '메뉴명', 
                         '열량(kcal)', 
                         '탄수화물(g)',
@@ -40,7 +40,7 @@ function MixtureSingle(props){
                 {
                 singleMixture.map((o, i)=>{
                     return(
-                    <tr key={i}>
+                    <tr key={i} className="table_row">
                         <td>{i + 1}</td>
                         <td>{o.MAKER_NM}</td>
                         <td>{o.gram}</td>

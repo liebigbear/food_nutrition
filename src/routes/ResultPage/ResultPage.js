@@ -40,11 +40,11 @@ function ResultPage(props){
         return(
             <div className="wrap">
                 <h1>결과창</h1>
-                <table id="food_graph">
+                <table className="food_graph">
                     <tbody>
                         {foodGraph_Header('',
                                 '상호명', 
-                                '기준(g)', 
+                                '중량(g)', 
                                 '메뉴명', 
                                 '열량(kcal)', 
                                 '탄수화물(g)',
@@ -62,7 +62,7 @@ function ResultPage(props){
                         {
                         resultList.map((o, i)=>{
                             return(
-                            <tr key={i}>
+                            <tr key={i} className={`table_row ${i}`}>
                                 <td>{i + 1}</td>
                                 <td>{o.MAKER_NM}</td>
                                 <td><span className="result_gram">{o.gram}</span></td>
@@ -77,14 +77,14 @@ function ResultPage(props){
                                 <td className="aa8">{o.AMT_NUM8}</td>
                                 <td className="aa9">{o.AMT_NUM9}</td>
                                 <td className="menu_correction">
-                                    <button onClick={()=>{
-                                        let gram = document.querySelectorAll('.result_gram')[i]
-                                        result_correction(gram, o, resultList, on, setOn)
+                                    <button className="nutrition_correction_btn" onClick={(e)=>{
+                                        let gram = document.querySelectorAll('.result_gram')
+                                        result_correction(gram, i, o, resultList, on, setOn, e)
                                     }}
                                     >수정</button>
                                 </td>
-                                <td className="menu_delete">
-                                    <button onClick={()=>storage_delete_box(resultList, setResultList, i, 'resultlist', sessionStorage)}>X</button>
+                                <td>
+                                    <button className="menu_delete" onClick={()=>storage_delete_box(resultList, setResultList, i, 'resultlist', sessionStorage)}>X</button>
                                 </td>
                             </tr>
                             )

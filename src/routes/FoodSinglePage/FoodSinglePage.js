@@ -31,8 +31,10 @@ function FoodSinglePage(props){
         <div className="wrap">  
             <div id="single">
                 <div id="single_info">
-                    <p>메뉴명 : {nutrition_info_list.FOOD_NM_KR}</p>
-                    <p>상호명 : {nutrition_info_list.MAKER_NM}</p>
+                    <div className="single_name_info">
+                        <span className="single_maker">{nutrition_info_list.MAKER_NM}</span>
+                        <span className="single_food">{nutrition_info_list.FOOD_NM_KR}</span>
+                    </div>
                     <div id="select_gram">
                         <p className="gram_alert" style={{color : 'red', display : 'none'}}>숫자를 입력해주세요</p>
                         <span>

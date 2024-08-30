@@ -30,7 +30,7 @@ function usePublickit(){
     // FoodGraph 표 헤더(spread 연산자로 헤더에 표시할 내용들 추가)
     function foodGraph_Header(...arr){
         return(
-            <tr id="graph_line">
+            <tr className="graph_line">
                 {
                 arr.map((o, i)=>{
                     return(
@@ -43,10 +43,20 @@ function usePublickit(){
     }
     // local, session storage 안에 담긴 데이터로 만든 html표 항목 삭제 기능
     function storage_delete_box(state, setState, idx, storageItem, storage_type){
-        let modify_arr = [...state];
-        modify_arr.splice(idx, 1);
-        storage_type.setItem(storageItem, JSON.stringify(modify_arr));
-        setState(modify_arr)
+        let result_gram = document.querySelectorAll('.result_gram');
+        let ready = true;
+        result_gram.forEach((o)=>{
+            if(o.nodeName == 'INPUT'){
+                alert('수정을 완료해주세요.')
+                ready = false;
+            }
+        })
+        if(ready == true){
+            let modify_arr = [...state];
+            modify_arr.splice(idx, 1);
+            storage_type.setItem(storageItem, JSON.stringify(modify_arr));
+            setState(modify_arr)
+        }
     };
 
     // 결정시 저장되었다는 alert 띄우기
