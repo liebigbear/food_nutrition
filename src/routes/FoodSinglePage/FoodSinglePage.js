@@ -26,39 +26,119 @@ function FoodSinglePage(props){
     
     const base_nutrition_info_list = {...JSON.parse(localStorage.getItem('singlepage'))}
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
+    // 총 제공량이 끝에 g이 달려있어 제거하고 반올림
+    const surving_size = Number((nutrition_info_list.Z10500).replace('g', '')).toFixed(0);
+    // 설정된 유저 칼로리를 탄단지로 전환
+    const base_user_nutrition_info = function(user_kcal, user_weight, target){
+        if(user_kcal != undefined && user_weight != undefined){
+            let kcal = Number(user_kcal);
+            let weight = Number(user_weight);
 
+            let carb = kcal * 0.55 / 4;
+            let protein = weight * 0.8;
+            let fat = kcal * 0.28 / 9;
+            if(target == 'carb'){
+                return carb
+            }
+            else if(target == 'protein'){
+                return protein
+            }
+            else if(target == 'fat'){
+                return fat
+            }
+        }
+    }
     return(
         <div className="wrap">  
             <div id="single">
                 <div id="single_info">
                     <div className="single_name_info">
-                        <span className="single_maker">{nutrition_info_list.MAKER_NM}</span>
+                        <span className="single_maker">{nutrition_info_list.MAKER_NM != null ? nutrition_info_list.MAKER_NM : '상호명 없음'}</span>
                         <span className="single_food">{nutrition_info_list.FOOD_NM_KR}</span>
                     </div>
-                    <div id="select_gram">
-                        <p className="gram_alert" style={{color : 'red', display : 'none'}}>숫자를 입력해주세요</p>
-                        <span>
-                            양 : <input 
-                            className="gram" 
-                            type="text" 
-                            placeholder="기본 100g" 
-                            style={{width : '80px'}}
-                            onInput={()=>{
-                                nutrition_calculate(base_nutrition_info_list, setNutrition_info_list);
-                            }}
-                            />g
-                        </span>
-                        <span className="basic_gram" style={{fontSize : '10px', color : 'gray'}}>(1회 제공량 : {nutrition_info_list.Z10500})</span>
+                    <div className="nutrition_label">
+                        <div className="label_top">
+                            <span className="label_nutrition_info">영양정보</span>
+                            <div id="select_gram">
+                                <p className="gram_alert" style={{color : 'red', display : 'none'}}>숫자를 입력해주세요</p>
+                                <span className="basic_gram">1회 제공량 {surving_size}g</span>
+                                <span>
+                                    기준량 <input 
+                                    className="gram" 
+                                    type="text" 
+                                    placeholder="기본 100g" 
+                                    style={{width : '58px'}}
+                                    onInput={()=>{
+                                        nutrition_calculate(base_nutrition_info_list, setNutrition_info_list);
+                                    }}
+                                    />g
+                                </span>
+                            </div> 
+                        </div>
+                        <div className="label_contents">
+                            <div className="label_nutrition parent">
+                                <span>칼로리</span><span>{nutrition_info_list.AMT_NUM1}<span className="label_unit">kcal</span></span>
+                            </div>
+                            <div className="label_family">
+                                <div className="label_nutrition parent">
+                                    <span>탄수화물</span><span>{nutrition_info_list.AMT_NUM2}<span className="label_unit">g</span></span>
+                                </div>
+                                <div className="label_nutrition child">
+                                    <span>당류</span><span>{nutrition_info_list.AMT_NUM5}<span className="label_unit">g</span></span>
+                                </div>
+                            </div>
+                            <div className="label_nutrition parent">
+                                <span>단백질</span><span>{nutrition_info_list.AMT_NUM3}<span className="label_unit">g</span></span>
+                            </div>
+                            <div className="label_family">
+                                <div className="label_nutrition parent">
+                                    <span>지방</span><span>{nutrition_info_list.AMT_NUM4}<span className="label_unit">g</span></span>
+                                </div>
+                                <div className="label_nutrition child">
+                                    <span>포화지방산</span><span>{nutrition_info_list.AMT_NUM8}<span className="label_unit">g</span></span>
+                                </div>
+                                <div className="label_nutrition child">
+                                    <span>트렌스지방</span><span>{nutrition_info_list.AMT_NUM9}<span className="label_unit">g</span></span>
+                                </div>
+                            </div>
+                            <div className="label_nutrition parent">
+                                <span>나트륨</span><span>{nutrition_info_list.AMT_NUM6}<span className="label_unit">g</span></span>
+                            </div>
+                            <div className="label_nutrition parent">
+                                <span>콜레스테롤</span><span>{nutrition_info_list.AMT_NUM7}<span className="label_unit">g</span></span>
+                            </div>
+                            
+                        </div>
+                    </div> 
+                </div>
+                <div id="single_round_graph">
+                    <p className="round_graph_title">현재 기준 할당량</p>
+                    <div className="round_graphs">
+                        <div className="graph_wrap">
+                            <div id="kcal_round_graph" className="round_graph">
+                                <div className="center_circle"></div>
+                            </div>
+                            칼로리
+                        </div>
+                        <div className="graph_wrap">
+                            <div id="carb_round_graph" className="round_graph">
+                                <div className="center_circle"></div>
+                            </div>
+                            탄수화물
+                        </div>
+                        <div className="graph_wrap">
+                            <div id="protein_round_graph" className="round_graph">
+                                <div className="center_circle"></div>
+                            </div>
+                            단백질
+                        </div>
+                        <div className="graph_wrap">
+                            <div id="fat_round_graph" className="round_graph">
+                                <div className="center_circle"></div>
+                            </div>
+                            지방
+                        </div>
                     </div>
-                    <p>열량 : {nutrition_info_list.AMT_NUM1}kcal</p>
-                    <p>탄수화물 : {nutrition_info_list.AMT_NUM2}g</p>
-                    <p>단백질 : {nutrition_info_list.AMT_NUM3}g</p>
-                    <p>지방 : {nutrition_info_list.AMT_NUM4}g</p>
-                    <p>당류 : {nutrition_info_list.AMT_NUM5}g</p>
-                    <p>나트륨 : {nutrition_info_list.AMT_NUM6}g</p>
-                    <p>콜레스테롤 : {nutrition_info_list.AMT_NUM7}g</p>
-                    <p>포화지방산 : {nutrition_info_list.AMT_NUM8}g</p>
-                    <p>트렌스지방 : {nutrition_info_list.AMT_NUM9}g</p>    
                 </div>
             </div>
             <button 

@@ -119,21 +119,21 @@ function usePublickit(){
             return nutrition_reader(plus, nutrition, minus)
         }
         // 당(칼로리의 10%, 1g == 4kcal)
-        if(value == "AMT_NUM5"){
-            let sugar = userInfo.kcal / meal * 0.1 / 4;
-            let plus = calculate(sugar, 'plus');
-            let minus = calculate(sugar, 'minus');
-            return nutrition_reader(plus, nutrition, minus)
-        }
+        // if(value == "AMT_NUM5"){
+        //     let sugar = userInfo.kcal / meal * 0.1 / 4;
+        //     let plus = calculate(sugar, 'plus');
+        //     let minus = calculate(sugar, 'minus');
+        //     return nutrition_reader(plus, nutrition, minus)
+        // }
         // 나트륨(2300g이 표준)
-        if(value == "AMT_NUM6"){
-            let sodium = 2300;
-            let plus = calculate(sodium, 'plus');
-            let minus = calculate(sodium, 'minus');
-            return nutrition_reader(plus, nutrition, minus)
-        }
+        // if(value == "AMT_NUM6"){
+        //     let sodium = 2300;
+        //     let plus = calculate(sodium, 'plus');
+        //     let minus = calculate(sodium, 'minus');
+        //     return nutrition_reader(plus, nutrition, minus)
+        // }
 
-        // 편차 계산기
+        // 5대 영양성분 평가 프로그램_편차 계산기
         function calculate(target, formula){
             let deviation = (target * 0.2)
             if(formula == 'plus'){
@@ -143,7 +143,7 @@ function usePublickit(){
                 return (target - deviation).toFixed(0)
             }
         }
-        // 영양성분 판독기
+        // 5대 영양성분 평가 프로그램_영양성분 판독기
         function nutrition_reader(plus, nutrition, minus){
             if(minus <= nutrition && nutrition <= plus){
                 return(
@@ -169,6 +169,11 @@ function usePublickit(){
             }
         }
     }
+    // 영양성분 라운드 그래프
+    function round_graph(){
+        
+    }
+
     return{
         Loading,
         foodGraph_Header,

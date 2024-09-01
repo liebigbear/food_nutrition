@@ -94,7 +94,7 @@ function ResultPage(props){
                 </table>
                 <div>
                     <h3>한끼로 어때요?</h3>
-                    <p>필수 5대 영양소는 기준 영양소의 20% +-로 기준을 제공해줍니다.</p>
+                    <p>칼로리와 3대 영양소는 기준 영양소의 20% +-로 기준을 제공해줍니다.</p>
                     {
                     result_nutrition_list_keys.map((o, i)=>{
                         return(
