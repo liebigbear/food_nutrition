@@ -34,6 +34,7 @@ function ResultPage(props){
         AMT_NUM8 : result_nutrition("AMT_NUM8", resultList),
         AMT_NUM9 : result_nutrition("AMT_NUM9", resultList)
     }
+    sessionStorage.setItem('result_nutrition_list', JSON.stringify(result_nutrition_list));
     const result_nutrition_list_keys = Object.keys(result_nutrition_list);
 
     if(JSON.parse(sessionStorage.getItem('resultlist')).length != 0){

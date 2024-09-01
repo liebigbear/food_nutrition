@@ -170,8 +170,26 @@ function usePublickit(){
         }
     }
     // 영양성분 라운드 그래프
-    function round_graph(){
-        
+    function round_graph(user_kcal, user_weight, target){
+        function base_user_nutrition_info(user_kcal, user_weight, target){
+            if(user_kcal != undefined && user_weight != undefined){
+                let kcal = user_kcal;
+                let weight = user_weight;
+    
+                let carb = (kcal * 0.55 / 4).toFixed(0);
+                let protein = (weight * 0.8).toFixed(0);
+                let fat = (kcal * 0.28 / 9).toFixed(0);
+                if(target == 'carb'){
+                    return Number(carb)
+                }
+                else if(target == 'protein'){
+                    return Number(protein)
+                }
+                else if(target == 'fat'){
+                    return Number(fat)
+                }
+            }
+        }
     }
 
     return{
