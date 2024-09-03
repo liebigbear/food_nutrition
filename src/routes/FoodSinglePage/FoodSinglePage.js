@@ -15,10 +15,11 @@ function FoodSinglePage(props){
         nutrition_calculate,
         sessionStorage_add_resultList,
         localStorage_add_singlePage,
+        single_round_graph
     } = useSingleKit();
     const {
         Alert,
-        click_alert
+        click_alert,
     } = usePublickit();
     
     // url파라미터 해당하는 list항목 localStorage에 저장
@@ -28,63 +29,6 @@ function FoodSinglePage(props){
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
     // 총 제공량이 끝에 g이 달려있어 제거하고 반올림
     const surving_size = Number((nutrition_info_list.Z10500).replace('g', '')).toFixed(0);
-
-    
-    // 설정된 유저 칼로리를 탄단지로 전환
-    function base_user_nutrition_info(user_kcal, user_weight, target){
-        if(user_kcal != undefined && user_weight != undefined){
-            let kcal = user_kcal;
-            let weight = user_weight;
-
-            let carb = (kcal * 0.55 / 4).toFixed(0);
-            let protein = (weight * 0.8).toFixed(0);
-            let fat = (kcal * 0.28 / 9).toFixed(0);
-            if(target == 'carb'){
-                return Number(carb)
-            }
-            else if(target == 'protein'){
-                return Number(protein)
-            }
-            else if(target == 'fat'){
-                return Number(fat)
-            }
-        }
-    }
-    // userPage_nutrition
-    const user_kcal = JSON.parse(sessionStorage.getItem('userInfo')).kcal;
-    const user_weight = JSON.parse(sessionStorage.getItem('userInfo')).weight;
-    const user_carb = base_user_nutrition_info(user_kcal, user_weight, 'carb');
-    const user_protein = base_user_nutrition_info(user_kcal, user_weight, 'protein');
-    const user_fat = base_user_nutrition_info(user_kcal, user_weight, 'fat');
-    // resultPage_nutrition
-    const result_kcal = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM1;
-    const result_carb = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM2;
-    const result_protein = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM3;
-    const result_fat = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM4;
-
-    function round_graph_calculation(user_nutrition, now_nutrition){
-        let result_percent = (now_nutrition / user_nutrition * 100).toFixed(0);
-        return result_percent
-    }
-    const now_kcal_percent = Number(round_graph_calculation(user_kcal, nutrition_info_list.AMT_NUM1));
-    const now_carb_percent = Number(round_graph_calculation(user_carb, nutrition_info_list.AMT_NUM2));
-    const now_protein_percent = Number(round_graph_calculation(user_protein, nutrition_info_list.AMT_NUM3));
-    const now_fat_percent = Number(round_graph_calculation(user_fat, nutrition_info_list.AMT_NUM4));
-
-    const result_kcal_percent = Number(round_graph_calculation(user_kcal, result_kcal));
-    const result_carb_percent = Number(round_graph_calculation(user_carb, result_carb));
-    const result_protein_percent = Number(round_graph_calculation(user_protein, result_protein));
-    const result_fat_percent = Number(round_graph_calculation(user_fat, result_fat));
-
-    function round_graph_area(result_percent, now_percent){
-        return(
-            `conic-gradient( 
-                red 0% ${result_percent}%,
-                #26BDE2 ${result_percent}% ${result_percent + now_percent}%,
-                gray ${result_percent + now_percent}% 100%
-            )`
-        )
-    }
 
     return(
         <div className="wrap">  
@@ -154,25 +98,25 @@ function FoodSinglePage(props){
                     <div className="round_graphs">
                         <div className="graph_wrap">
                             <div id="kcal_round_graph" className="round_graph" style={{
-                                background : round_graph_area(result_kcal_percent, now_kcal_percent)}}><div className="center_circle"></div>
+                                background : single_round_graph('kcal', nutrition_info_list.AMT_NUM1)}}><div className="center_circle"></div>
                             </div>
                             칼로리
                         </div>
                         <div className="graph_wrap">
                             <div id="carb_round_graph" className="round_graph"style={{
-                                background : round_graph_area(result_carb_percent, now_carb_percent)}}><div className="center_circle"></div>
+                                background : single_round_graph('carb', nutrition_info_list.AMT_NUM2)}}><div className="center_circle"></div>
                             </div>
                             탄수화물
                         </div>
                         <div className="graph_wrap">
                             <div id="protein_round_graph" className="round_graph"style={{
-                                background : round_graph_area(result_protein_percent, now_protein_percent)}}><div className="center_circle"></div>
+                                background : single_round_graph('protein', nutrition_info_list.AMT_NUM3)}}><div className="center_circle"></div>
                             </div>
                             단백질
                         </div>
                         <div className="graph_wrap">
                             <div id="fat_round_graph" className="round_graph"style={{
-                                background : round_graph_area(result_fat_percent, now_fat_percent)}}><div className="center_circle"></div>
+                                background : single_round_graph('fat', nutrition_info_list.AMT_NUM4)}}><div className="center_circle"></div>
                             </div>
                             지방
                         </div>

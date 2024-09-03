@@ -169,27 +169,68 @@ function usePublickit(){
             }
         }
     }
-    // 영양성분 라운드 그래프
-    function round_graph(user_kcal, user_weight, target){
-        function base_user_nutrition_info(user_kcal, user_weight, target){
-            if(user_kcal != undefined && user_weight != undefined){
-                let kcal = user_kcal;
-                let weight = user_weight;
+    function round_graph(target, type='storage'){
+        const user_kcal = JSON.parse(sessionStorage.getItem('userInfo')).kcal;
+        const user_weight = JSON.parse(sessionStorage.getItem('userInfo')).weight;
+        let result_nutrition = '';
+        console.log(target, type)
+        if(type != 'storage'){
+            result_nutrition = type;
+        } 
+        else {
+            if(target == 'kcal'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM1;
+            }
+            else if(target == 'carb'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM2;
+            }
+            else if(target == 'protein'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM3;
+            }
+            else if(target == 'fat'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM4;
+            }
+        }
+       
+        const base_user_nutrition_info = function(add_user_kcal, add_user_weight, add_target){
+            if(add_user_kcal != undefined && add_user_weight != undefined){
+                let kcal = add_user_kcal;
+                let weight = add_user_weight;
     
                 let carb = (kcal * 0.55 / 4).toFixed(0);
                 let protein = (weight * 0.8).toFixed(0);
                 let fat = (kcal * 0.28 / 9).toFixed(0);
-                if(target == 'carb'){
+                if(add_target == 'kcal'){
+                    return Number(kcal)
+                }
+                else if(add_target == 'carb'){
                     return Number(carb)
                 }
-                else if(target == 'protein'){
+                else if(add_target == 'protein'){
                     return Number(protein)
                 }
-                else if(target == 'fat'){
+                else if(add_target == 'fat'){
                     return Number(fat)
                 }
             }
         }
+        const user_nutrition = base_user_nutrition_info(user_kcal, user_weight, target);
+
+        const round_graph_calculation = function(add_user_nutrition, add_now_nutrition){
+            let result_percent = (add_now_nutrition / add_user_nutrition * 100).toFixed(0);
+            return result_percent
+        }
+        const result_nutrition_percent = Number(round_graph_calculation(user_nutrition, result_nutrition));
+        const round_graph_area = function(result_percent){
+            return(
+                `conic-gradient( 
+                    #26BDE2 0% ${result_percent}%,
+                    gray ${result_percent}% 100%
+                )`
+            )
+        }
+        console.log(round_graph_area(result_nutrition_percent))
+        return round_graph_area(result_nutrition_percent);
     }
 
     return{
@@ -198,7 +239,8 @@ function usePublickit(){
         storage_delete_box,
         Alert,
         click_alert,
-        meal_evaluation
+        meal_evaluation,
+        round_graph
     }
 }
 export default usePublickit;

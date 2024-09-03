@@ -9,14 +9,15 @@ function MixtureSingle(props){
     const navigate = useNavigate();
     const idx = Number(param.id);
     const singleMixture = OutletContext.mixtureList[idx];
+
     const singleNutrition = OutletContext.nutritionList[idx];
     const result_nutrition_list_keys = Object.keys(singleNutrition);
     // App.js에서 가져옴
     const nutrition_name = props.nutrition_name
-    console.log(singleNutrition, result_nutrition_list_keys)
     const {
         foodGraph_Header,
-        meal_evaluation
+        meal_evaluation,
+        round_graph
     }=usePublickit();
     return(
         <div>
@@ -60,19 +61,49 @@ function MixtureSingle(props){
                 }
             </tbody>
         </table>
-        <div>
-            <h3>한끼로 어때요?</h3>
-            <p>칼로리와 3대 영양소는 기준 영양소의 20% +-로 기준을 제공해줍니다.</p>
-            {
-            result_nutrition_list_keys.map((o, i)=>{
-                return(
-                    <div key={i}>
-                        <span>{nutrition_name[i]} {singleNutrition[o]}</span>
-                        {meal_evaluation(o, singleNutrition[o], true)}
+        <div className="result_content_wrap">
+            <div id="result_total">
+                <h3>한끼로 어때요?</h3>
+                <p>칼로리와 3대 영양소는 기준 영양소의 20% +-로 기준을 제공해줍니다.</p>
+                {
+                result_nutrition_list_keys.map((o, i)=>{
+                    return(
+                        <div key={i}>
+                            <span>{nutrition_name[i]} {singleNutrition[o]}</span>
+                            {meal_evaluation(o, singleNutrition[o], true)}
+                        </div>
+                    )
+                })
+                }
+            </div>
+            <div id="result_round_graph">
+                <div className="round_graphs">
+                    <div className="graph_wrap">
+                        <div id="kcal_round_graph" className="round_graph" style={{
+                            background : round_graph('kcal', singleNutrition.AMT_NUM1)}}><div className="center_circle"></div>
+                        </div>
+                        칼로리
                     </div>
-                )
-            })
-            }
+                    <div className="graph_wrap">
+                        <div id="carb_round_graph" className="round_graph"style={{
+                            background : round_graph('carb', singleNutrition.AMT_NUM2)}}><div className="center_circle"></div>
+                        </div>
+                        탄수화물
+                    </div>
+                    <div className="graph_wrap">
+                        <div id="protein_round_graph" className="round_graph"style={{
+                            background : round_graph('protein', singleNutrition.AMT_NUM3)}}><div className="center_circle"></div>
+                        </div>
+                        단백질
+                    </div>
+                    <div className="graph_wrap">
+                        <div id="fat_round_graph" className="round_graph"style={{
+                            background : round_graph('fat', singleNutrition.AMT_NUM4)}}><div className="center_circle"></div>
+                        </div>
+                        지방
+                    </div>
+                </div>
+            </div>
         </div>
         <button onClick={()=>navigate('/FoodMixture/MixtureList')}>돌아가기</button>
         </div>     
