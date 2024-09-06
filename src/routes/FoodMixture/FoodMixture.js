@@ -15,6 +15,12 @@ function FoodMixture(props){
     const nutritionList = foodMixture.map((o)=>{
         return o.result_nutrition
     });
+    useEffect(()=>{
+        setTimeout(()=>{
+            document.querySelector('.wrap').classList.add('on')
+        }, 100)
+    }, [])
+
     return(
     <div className="wrap">
         <h1>조합리스트</h1>

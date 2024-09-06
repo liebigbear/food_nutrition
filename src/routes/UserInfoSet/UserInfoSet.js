@@ -16,6 +16,9 @@ function UserInfoSet(props){
     } = useUserSetKit();
 
     useEffect(()=>{
+        setTimeout(()=>{
+            document.querySelector('.wrap').classList.add('on')
+        }, 100)
         if(info != ''){
             document.querySelector('.sex').value = info.sex;
             document.querySelector('.age').value = info.age;
@@ -37,7 +40,7 @@ function UserInfoSet(props){
                         getImage(event);
                     }} style={{display : 'none'}}></input>
                 </div>
-            <div>
+            <div className="info_set">
                 <p>성별을 선택해주세요.</p>
                 <select className="sex">
                     <option style={{display : 'none'}}></option>
@@ -45,7 +48,7 @@ function UserInfoSet(props){
                     <option>여</option>
                 </select>
             </div>
-            <div>
+            <div className="info_set">
                 <p>연령대를 선택해주세요.</p>
                 <select className="age">
                     <option style={{display : 'none'}}></option>
@@ -60,15 +63,15 @@ function UserInfoSet(props){
                     <option>65세 이상</option>
                 </select>
             </div>
-            <div>
+            <div className="info_set">
                 <p>키를 입력해주세요</p>
                 <p><input className="stature"/>cm</p>
             </div>
-            <div>
+            <div className="info_set">
                 <p>몸무게를 입력해주세요</p>
                 <p><input className="weight"/>kg</p>
             </div>
-            <div>
+            <div className="info_set">
                 <p>하루에 드시는 끼니 수를 입력해주세요(최대 6끼).</p>
                 <select className="meal">
                     <option style={{display : 'none'}}></option>
@@ -80,7 +83,7 @@ function UserInfoSet(props){
                     <option>6</option>
                 </select>
             </div>
-            <div>
+            <div className="info_set">
                 <p>하루에 드실 칼로리 양을 입력해주세요(기본으로 하고싶으면 기본 선택).</p>
                 <div className="kcal_wrap">
                     <input className="kcal"/>
@@ -91,10 +94,12 @@ function UserInfoSet(props){
                     <span>기본</span>
                 </div>
             </div>
-            <button onClick={()=>{
+            <button 
+             className="btn center_btn"
+             onClick={()=>{
                 infoList('sex', 'age', 'stature', 'weight', 'meal', 'kcal', 'standard', on, setOn,);
+                navigate('/UserInfo')
             }}>저장!</button>
-            <button onClick={()=>{navigate('/FoodInfo/Graph')}}>음식 탐색기로 이동</button>
         </div>
     )
 }

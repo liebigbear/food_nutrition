@@ -23,15 +23,21 @@ function FoodSinglePage(props){
     } = usePublickit();
     
     // url파라미터 해당하는 list항목 localStorage에 저장
-    localStorage_add_singlePage(idx, list)
+    localStorage_add_singlePage(idx, list);
     
-    const base_nutrition_info_list = {...JSON.parse(localStorage.getItem('singlepage'))}
+    const base_nutrition_info_list = {...JSON.parse(localStorage.getItem('singlepage'))};
     const [nutrition_info_list, setNutrition_info_list] = useState(base_nutrition_info_list);
     // 총 제공량이 끝에 g이 달려있어 제거하고 반올림
-    const surving_size = Number((nutrition_info_list.Z10500).replace('g', '')).toFixed(0);
+    const surving_size = Number((nutrition_info_list.Z10500).replace(/g|,|mL/g, '')).toFixed(0);
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            document.querySelector('.wrap').classList.add('on')
+        }, 100)
+    }, [])
 
     return(
-        <div className="wrap">  
+        <div className="wrap">
             <div id="single">
                 <div id="single_info">
                     <div className="single_name_info">
@@ -97,26 +103,42 @@ function FoodSinglePage(props){
                     <p className="round_graph_title">현재 기준 할당량</p>
                     <div className="round_graphs">
                         <div className="graph_wrap">
-                            <div id="kcal_round_graph" className="round_graph" style={{
-                                background : single_round_graph('kcal', nutrition_info_list.AMT_NUM1)}}><div className="center_circle"></div>
+                            <div id="kcal_round_graph" className="round_graph" style={{background : single_round_graph('kcal', nutrition_info_list.AMT_NUM1)}}>
+                                <div className="center_circle">
+                                    <span>{single_round_graph('kcal', nutrition_info_list.AMT_NUM1, 'user')}kcal</span>
+                                    <span>/</span>
+                                    <span>{single_round_graph('kcal', nutrition_info_list.AMT_NUM1, 'now')}kcal</span>
+                                </div>
                             </div>
                             칼로리
                         </div>
                         <div className="graph_wrap">
-                            <div id="carb_round_graph" className="round_graph"style={{
-                                background : single_round_graph('carb', nutrition_info_list.AMT_NUM2)}}><div className="center_circle"></div>
+                            <div id="carb_round_graph" className="round_graph"style={{background : single_round_graph('carb', nutrition_info_list.AMT_NUM2)}}>
+                                <div className="center_circle">
+                                    <span>{single_round_graph('carb', nutrition_info_list.AMT_NUM2, 'user')}g</span>
+                                    <span>/</span>
+                                    <span>{single_round_graph('carb', nutrition_info_list.AMT_NUM2, 'now')}g</span>
+                                </div>
                             </div>
                             탄수화물
                         </div>
                         <div className="graph_wrap">
-                            <div id="protein_round_graph" className="round_graph"style={{
-                                background : single_round_graph('protein', nutrition_info_list.AMT_NUM3)}}><div className="center_circle"></div>
+                            <div id="protein_round_graph" className="round_graph"style={{background : single_round_graph('protein', nutrition_info_list.AMT_NUM3)}}>
+                                <div className="center_circle">
+                                    <span>{single_round_graph('protein', nutrition_info_list.AMT_NUM3, 'user')}g</span>
+                                    <span>/</span>
+                                    <span>{single_round_graph('protein', nutrition_info_list.AMT_NUM3, 'now')}g</span>
+                                </div>
                             </div>
                             단백질
                         </div>
                         <div className="graph_wrap">
-                            <div id="fat_round_graph" className="round_graph"style={{
-                                background : single_round_graph('fat', nutrition_info_list.AMT_NUM4)}}><div className="center_circle"></div>
+                            <div id="fat_round_graph" className="round_graph"style={{background : single_round_graph('fat', nutrition_info_list.AMT_NUM4)}}>
+                                <div className="center_circle">
+                                    <span>{single_round_graph('fat', nutrition_info_list.AMT_NUM4, 'user')}g</span>
+                                    <span>/</span>
+                                    <span>{single_round_graph('fat', nutrition_info_list.AMT_NUM4, 'now')}g</span>
+                                </div>
                             </div>
                             지방
                         </div>
@@ -124,24 +146,17 @@ function FoodSinglePage(props){
                 </div>
             </div>
             <button 
-                style={{
-                    margin : '20px auto 0',
-                    display : 'block',
-                    width : '150px',
-                    height : '50px',
-                    fontSize : '18px',
-                    background : 'blue',
-                    border : 'solid 1px #000',
-                    borderRadius : '30px',
-                    cursor : 'pointer'
-                }}
+                className="btn"
+                style={{display : 'block', width : '200px', height : '50px', borderRadius : '30px', fontSize : '16px', margin : '40px auto'}}
                 onClick={()=>{
                     sessionStorage_add_resultList(nutrition_info_list);
                     click_alert();
                 }}
             >오늘은 너다!</button>
-            <button onClick={()=>{navigate('/FoodInfo/Graph');}}>음식정보로 이동</button>
-            <button onClick={()=>{navigate('ResultPage');}}>종합창으로 이동</button>
+            <div style={{marginBottom : '30px', display : 'flex', justifyContent : 'space-between'}}>
+                <span style={{cursor : 'pointer'}} onClick={()=>{navigate('/FoodInfo/Graph');}}>{'◀' + ' 음식정보로 이동'}</span>
+                <span style={{cursor : 'pointer'}} onClick={()=>{navigate('ResultPage');}}>{'종합창으로 이동 ' + '▶'}</span>
+            </div>
             {<Alert text={'정보가 종합창에 저장되었습니다.'}></Alert>}
         </div>
     )

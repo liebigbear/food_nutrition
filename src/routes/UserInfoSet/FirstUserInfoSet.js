@@ -15,6 +15,10 @@ function FirstUserInfoSet(props){
     } = useUserSetKit();
 
     useEffect(()=>{
+        setTimeout(()=>{
+            document.querySelector('.wrap').classList.add('on')
+        }, 100)
+        
         if(info != ''){
             document.querySelector('.sex').value = info.sex;
             document.querySelector('.age').value = info.age;
@@ -26,7 +30,6 @@ function FirstUserInfoSet(props){
         };
         hide_kcalInput();
     }, [])
-    
     return(
         <div className="wrap">
             <h1>내 정보 설정</h1>
@@ -90,7 +93,9 @@ function FirstUserInfoSet(props){
                     <span>기본</span>
                 </div>
             </div>
-            <button onClick={()=>{
+            <button
+             className="btn center_btn"
+             onClick={()=>{
                 infoList('sex', 'age', 'stature', 'weight', 'meal', 'kcal', 'standard',on, setOn, true);
             }}>저장!</button>
         </div>

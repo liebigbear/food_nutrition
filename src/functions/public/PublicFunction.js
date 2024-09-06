@@ -147,33 +147,33 @@ function usePublickit(){
         function nutrition_reader(plus, nutrition, minus){
             if(minus <= nutrition && nutrition <= plus){
                 return(
-                    <div>
+                    <>
+                        <span className="nutrition_average">({minus} ~ {plus})</span>
                         <span className="nutrition_check good">적절</span>
-                        <span className="nutrition_average">기준치 : {minus} ~ {plus}</span>
-                    </div>
+                    </>
                 )
             } else if(nutrition < minus){
                 return(
-                    <div>
+                    <>
+                        <span className="nutrition_average">({minus} ~ {plus})</span>
                         <span className="nutrition_check lack">부족</span>
-                        <span className="nutrition_average">기준치 : {minus} ~ {plus}</span>
-                    </div>
+                    </>
                 )
             } else if(nutrition > plus){
                 return(
-                    <div>
+                    <>
+                        <span className="nutrition_average">({minus} ~ {plus})</span>
                         <span className="nutrition_check over">넉넉</span>
-                        <span className="nutrition_average">기준치 : {minus} ~ {plus}</span>
-                    </div>
+                    </>
                 )
             }
         }
     }
-    function round_graph(target, type='storage'){
+    // 공용 영양성분별 라운드 그래프 영역표시 css만들기 + 추가로 getNutritionInfo 파라미터에 'user' 또는 'now' 입력 시 user, now 영양소 데이터 출력
+    function round_graph(target, type='storage', getNutritionInfo = ''){
         const user_kcal = JSON.parse(sessionStorage.getItem('userInfo')).kcal;
         const user_weight = JSON.parse(sessionStorage.getItem('userInfo')).weight;
         let result_nutrition = '';
-        console.log(target, type)
         if(type != 'storage'){
             result_nutrition = type;
         } 
@@ -229,8 +229,16 @@ function usePublickit(){
                 )`
             )
         }
-        console.log(round_graph_area(result_nutrition_percent))
-        return round_graph_area(result_nutrition_percent);
+
+        if(getNutritionInfo == 'user'){
+            return user_nutrition
+        } 
+        else if(getNutritionInfo == 'now'){
+            return result_nutrition
+        }
+        else if(getNutritionInfo == ''){
+            return round_graph_area(result_nutrition_percent);
+        }
     }
 
     return{
@@ -240,7 +248,7 @@ function usePublickit(){
         Alert,
         click_alert,
         meal_evaluation,
-        round_graph
+        round_graph,
     }
 }
 export default usePublickit;

@@ -8,6 +8,9 @@ li{
 }
 .App{width: 100%; position: relative;}
 /* 재사용 css */
+/* wrap */
+.wrap{width: calc(100% - 200px); margin: 0 auto; padding-top: 50px; opacity: 0; transition: all .5s;}
+.wrap.on{opacity: 1;}
 .btn{
   border: none; border-radius: 10px;
   background:linear-gradient(#81c784, #66bb6a 90%, #4caf50 100%); 
@@ -16,14 +19,45 @@ li{
 .btn:hover{
   background: #66bb6a;
 }
-.image_box{
-  width: 100px; height: 100px; 
-  border: solid 1px #000; border-radius: 50%;
-  cursor: pointer; overflow: hidden;
+.center_btn{
+  display: block; width: 200px; height: 50px;
+  border-radius: 30px; font-size: 16px; margin: 40px auto;
 }
-.user_img{
-  width: 100%; height: 100%;
-  object-fit: cover;
+.pagenation_btn{
+  width: 30px; height: 30px; font-size: 0; 
+  border-radius: 50%; border: none;
+  background: #50C878; cursor: pointer;
+  position: relative; transition: all .5s;
+}
+.pagenation_btn:hover{
+  background: #59dd85;
+}
+.pagenation_btn.prev::before{
+  content: ''; width: 1px; height: 8px; display: block;
+  background: #fff; transform: rotate(45deg) translate(-50%, -50%);
+  position: absolute; top: 12px; left: 11px;
+}
+.pagenation_btn.prev::after{
+  content: ''; width: 1px; height: 8px; display: block;
+  background: #fff; transform: rotate(135deg) translate(-50%, -50%);
+  position: absolute; top: 12px; left: 10px;
+}
+.pagenation_btn.next::before{
+  content: ''; width: 1px; height: 8px; display: block;
+  background: #fff; transform: rotate(-45deg) translate(-50%, -50%);
+  position: absolute; top: 11px; right: 10px;
+}
+.pagenation_btn.next::after{
+  content: ''; width: 1px; height: 8px; display: block;
+  background: #fff; transform: rotate(-135deg) translate(-50%, -50%);
+  position: absolute; top: 11px; right: 11px;
+}
+/* 하단 네비게이션 버튼 묶음 */
+.foot_navigate_box{
+  margin-bottom: 30px; display: flex; justify-content: space-between;
+}
+.foot_navigate_box .foot_navigate{
+  cursor: pointer;
 }
 /* 라운드 그래프 디자인 */
 .round_graphs{
@@ -33,6 +67,7 @@ li{
 }
 .round_graphs .graph_wrap{
   width: 50%; display: flex; flex-flow: column; align-items: center;
+  margin-bottom: 15px;
 }
 .round_graphs .graph_wrap .round_graph{
   position: relative;
@@ -41,23 +76,51 @@ li{
   background: conic-gradient( 
     #26BDE2 0% 20%, gray 20% 100%
   );
+  margin-bottom: 5px;
 }
 .round_graphs .graph_wrap .round_graph .center_circle{
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 60%; aspect-ratio: 1/1; display: block;
-  border-radius: 100%;
-  background: #fff;
-  position: absolute;
+  width: 60%; aspect-ratio: 1/1; border-radius: 100%; background: #fff;
+  display: flex; flex-flow: column; justify-content: center; align-items: center;
+  font-size: 15px; font-weight: bold;
 }
 /* 라운드 그래프 영역 */
 .result_content_wrap{
-  width: 100%; display: flex;
+  width: 100%; display: flex; margin-top: 20px;
 }
-#result_total{
+.result_content_wrap #result_round_graph{
+  width: 50%; padding: 5%;
+}
+/* 영양성분 총 평가 표 디자인 */
+.result_content_wrap #result_total{
   width: 50%;
 }
-#result_round_graph{
-  width: 50%; padding: 5%;
+.result_content_wrap #result_total .result_total_subT{
+  font-size: 14px;
+}
+
+.result_nutrition_evaluation{
+  width: 90%; padding: 5px 10px; 
+  background: #59dd856b; border-radius: 30px;
+  margin-bottom: 5px;
+}
+.result_nutrition_evaluation .nutrition_average{
+  font-size: 10px; color: gray; display: inline-block;
+}
+.result_nutrition_evaluation .nutrition_check{
+  float: right; font-size: 12px; padding: 3px; border-radius: 30px;
+}
+.result_nutrition_evaluation .nutrition_check.good{
+  background: green;
+  color: #fff;
+}
+.result_nutrition_evaluation .nutrition_check.lack{
+  background: blue;
+  color: #fff;
+}
+.result_nutrition_evaluation .nutrition_check.over{
+  background: red;
+  color: #fff;
 }
 /* 메뉴 표 디자인 */
 .food_graph{
@@ -86,8 +149,26 @@ li{
 .food_graph > tbody > .graph_line > td{
   color: #4CAF50; font-size: 13px; font-weight: bold;
 }
-/* wrap */
-.wrap{width: 100%; padding: 50px 100px 0;}
+/* UserInfoSet */
+.info_set{
+  width: 60%; margin: 0 auto; background: #59dd8577;
+  padding: 7px 40px; margin-bottom: 10px;
+  border-radius: 30px; font-weight: bold;
+}
+.info_set p{
+  margin: 0 0 5px;
+}
+.info_set select{
+  border-radius: 50px; padding: 5px;
+}
+.info_set input{
+  border: solid 1px #000; border-radius: 50px; padding: 5px;
+}
+.info_set select:focus, 
+.info_set input:focus{
+  border: solid 1px #50C878;
+  outline: none;
+}
 /* 재사용 css */
 
 /* App.js */
@@ -141,7 +222,16 @@ li{
 }
 #top_nav .hamburger:hover > span:nth-child(2){
   height: 10px;
-  background: saddlebrown;
+  background: linear-gradient(yellow 0 20%, saddlebrown 20% 90%);
+  position: relative;
+}
+#top_nav .hamburger:hover > span:nth-child(2)::before{
+  content: ''; width: 2px; height: 7px; background-color: yellow; display: block;
+  position: absolute; top: 10%; left: 40%;
+}
+#top_nav .hamburger:hover > span:nth-child(2)::after{
+  content: ''; width: 2px; height: 4px; background-color: yellow; display: block;
+  position: absolute; top: 10%; left: 30%;
 }
 #top_nav .hamburger:hover > span:nth-child(3){
   border-radius: 0 0 30px 30px;
@@ -290,8 +380,29 @@ li{
   }
 }
 /* UserInfo */
-.now_info > span{
-  margin-right: 10px;
+.now_info{
+  text-align: center; font-weight: bold; width: 80%; height: 65px;
+  line-height: 65px; margin: 0 auto; font-size: 18px;
+  background: #86AB89 ; color: #f8ede3; text-shadow: 1px 1px #00000049;
+  border: none; border-radius: 30px;
+}
+.now_info_wrap{
+  width: 80%; margin: 0 auto;
+  display: flex; flex-flow: row wrap; justify-content: space-between;
+}
+.now_info_wrap > p{
+  width: calc(100%/2 - 60px); padding: 20px 10px; background: #CBE2B5 ; 
+  border: none; border-radius: 30px; color: #505050; text-shadow: 1px 1px #0000001f;
+}
+.image_box{
+  width: 200px; height: 200px; 
+  border: solid 1px #000; border-radius: 50%;
+  cursor: pointer; overflow: hidden;
+  margin: 0 auto 40px;
+}
+.user_img{
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 
 /* FoodSearching css */
@@ -332,6 +443,9 @@ li{
 #graphOutlet #pagenation_box{
   display: flex; margin : 15px 0;
   justify-content: center;
+}
+#graphOutlet #pagenation_box .pagenation{
+  display: flex; align-items: center; gap: 10px;
 }
 /* FoodSinglePage */
 #single{
@@ -390,7 +504,7 @@ li{
   width: 60%; padding: 0 30px;
 }
 #single #single_round_graph .round_graph_title{
-  font-weight: bold; text-align: center;
+  font-weight: bold; text-align: center; margin: 0 0 15px;
 }
 
 .single_hide_alert{
@@ -401,6 +515,8 @@ li{
   display: flex; justify-content: center; align-items: center;
   visibility: hidden;
   top: 50%; left: 50%;
+  background: #0000005d; color: #fff;
+  font-size: 20px; font-weight: bold;
   transform: translate(-50%, -50%);
 }
 .single_hide_alert.hide{
@@ -417,18 +533,6 @@ li{
 .menu_correction > button{
   display: block; margin: 0 auto;
 }
-.nutrition_check.good{
-  background: green;
-  color: #fff;
-}
-.nutrition_check.lack{
-  background: blue;
-  color: #fff;
-}
-.nutrition_check.over{
-  background: red;
-  color: #fff;
-}
 .nutrition_correction_btn{
   background: #007BFF; color: #fff; 
   font-weight: bold; font-size: 10px;
@@ -442,9 +546,14 @@ li{
 /* FoodMixture */
 .foodMixture_box{
   width: 100%; height: 100px; display: block;
-  border: solid 1px #000; border-radius: 30px;
+  border: solid 1px #000; border-radius: 20px;
   padding: 10px 20px; margin-bottom: 20px;
   cursor: pointer; position: relative;
+  box-shadow: 1px 1px #000;
+  opacity: 0; transform: translateY(10px); transition: 1s; transition-property: transform, opacity;
+}
+.foodMixture_box.show{
+  opacity: 1; transform: translateY(0);
 }
 .foodMixture_box:hover{
   background: #81c784; color: #fff;

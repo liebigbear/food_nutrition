@@ -17,9 +17,9 @@ function FoodGraph(props){
     const foodSearchNumber = Number(sessionStorage.getItem('foodSearchNumber'));
     // 음식 페이지 범위
     // getData로 변동되는 state(App.js에서 가져옴)
-    const [list, setList] = [props.list, props.setList]
+    const [list, setList] = [props.list, props.setList];
     // 로딩창 트리거(App.js에서 가져옴)
-    const [trig, setTrig] = [props.trig, props.setTrig]
+    const [trig, setTrig] = [props.trig, props.setTrig];
     // useEffect 첫 재렌더링 막는 트리거(useRef사용) / useRef는 페이지가 재렌더링 되어도 값을 저장 + useRef가 바뀌어도 state처럼 재렌더링이 되지 않는 특성을 지님
     const ref = useRef(true);
     // 로딩창, FoodGraph_Header 가져오기(PublicFunction에서 가져옴)
@@ -107,7 +107,7 @@ function FoodGraph(props){
             </table>
             <div id="pagenation_box">
                 <div className="pagenation">
-                    <button onClick={()=>{
+                    <button className="pagenation_btn prev" onClick={()=>{
                             if(foodRange != 1){
                                 const range = foodRange - 1;
                                 sessionStorage.setItem('foodSearchNumber', range)
@@ -118,7 +118,7 @@ function FoodGraph(props){
                             }
                         }}>이전</button>
                     <span>{foodRange}페이지</span>
-                    <button onClick={function(){
+                    <button className="pagenation_btn next" onClick={function(){
                             if(list.length < 100){
                                 alert('마지막 페이지 입니다.');
                             } else {

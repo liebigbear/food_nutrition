@@ -49,8 +49,8 @@ function useSingleKit(){
         }
     }
 
-    // singlePage용 영양성분별 라운드 그래프 영역표시 css만들기
-    function single_round_graph(target, now_nutrition){
+    // singlePage용 영양성분별 라운드 그래프 영역표시 css만들기 + 추가로 getNutritionInfo 파라미터에 'user' 또는 'now' 입력 시 user, now 영양소 데이터 출력
+    function single_round_graph(target, now_nutrition, getNutritionInfo = ''){
         const user_kcal = JSON.parse(sessionStorage.getItem('userInfo')).kcal;
         const user_weight = JSON.parse(sessionStorage.getItem('userInfo')).weight;
         console.log('user_kcal = ' + user_kcal)
@@ -58,17 +58,21 @@ function useSingleKit(){
         console.log('target = ' + target)
         console.log('now_nutrition = ' + now_nutrition)
         let result_nutrition = '';
-        if(target == 'kcal'){
-            result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM1;
-        }
-        else if(target == 'carb'){
-            result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM2;
-        }
-        else if(target == 'protein'){
-            result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM3;
-        }
-        else if(target == 'fat'){
-            result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM4;
+        if(sessionStorage.getItem('result_nutrition_list') == undefined){
+            result_nutrition = 0;
+        } else {
+            if(target == 'kcal'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM1;
+            }
+            else if(target == 'carb'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM2;
+            }
+            else if(target == 'protein'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM3;
+            }
+            else if(target == 'fat'){
+                result_nutrition = JSON.parse(sessionStorage.getItem('result_nutrition_list')).AMT_NUM4;
+            }
         }
 
         const base_user_nutrition_info = function(add_user_kcal, add_user_weight, add_target){
@@ -103,8 +107,6 @@ function useSingleKit(){
         }
         const now_nutrition_percent = Number(round_graph_calculation(user_nutrition, now_nutrition));
         const result_nutrition_percent = Number(round_graph_calculation(user_nutrition, result_nutrition));
-        console.log('now_nutrition_percent =' + now_nutrition_percent)
-        console.log('result_nutrition_percent =' + result_nutrition_percent)
 
         const round_graph_area = function(result_percent, now_percent){
             return(
@@ -116,7 +118,15 @@ function useSingleKit(){
             )
         }
         console.log('round_graph_area =' + round_graph_area(result_nutrition_percent, now_nutrition_percent))
-        return round_graph_area(result_nutrition_percent, now_nutrition_percent);
+        if(getNutritionInfo == 'user'){
+            return user_nutrition
+        } 
+        else if(getNutritionInfo == 'now'){
+            return (Number(result_nutrition) + Number(now_nutrition)).toFixed(0)
+        }
+        else if(getNutritionInfo == ''){
+            return round_graph_area(result_nutrition_percent, now_nutrition_percent);  
+        }
     }
     return{
         nutrition_calculate,

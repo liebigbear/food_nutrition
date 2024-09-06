@@ -1,4 +1,6 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
+import usePublickit from "../../functions/public/PublicFunction";
+import { useEffect } from "react";
 
 function MixtureList(){
     const navigate = useNavigate();
@@ -8,7 +10,20 @@ function MixtureList(){
     const storage_delete_box = OutletContext.storage_delete_box;
     const mixtureList = OutletContext.mixtureList;
     const nutritionList = OutletContext.nutritionList;
-    console.log(nutritionList)
+
+    useEffect(()=>{
+        const foodMixture_box = document.getElementsByClassName('foodMixture_box');
+        const foodMixture_box_Interval = setInterval(()=>{
+            for(let i = 0; i < foodMixture_box.length; i++){
+                if(foodMixture_box[i].className != 'foodMixture_box show'){
+                    return foodMixture_box[i].classList.add('show');
+                }
+            }
+            clearInterval(foodMixture_box_Interval)
+        }, 100)
+    }, [])
+    
+
     return(
         <>
         {
@@ -44,6 +59,9 @@ function MixtureList(){
                 <p>나의 꿀조합을 만들어보세요!</p>
             </>
         }
+        <div className="foot_navigate_box">
+            <span className="foot_navigate" onClick={()=>{navigate('/ResultPage');}}>{'◀' + ' 결과창으로 돌아가기'}</span>
+        </div>
         </>
     )
 }

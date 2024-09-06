@@ -31,7 +31,6 @@ function useGraphkit(){
             alert('데이터를 불러오는데 실패하였습니다.')
         }
         setTrig(false)
-        
     }
 
     return{
